@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme | ACSEL 2026</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=IBM+Plex+Mono&family=Outfit:wght@400;600&family=Plus+Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <svg class="noise-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)" opacity="0.05" />
+    </svg>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">ACSEL 2026</a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span class="material-symbols-outlined menu-icon">menu</span>
+                <span class="material-symbols-outlined close-icon">close</span>
+            </label>
+            <div class="nav-menu">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="programme.html" class="nav-link">Programme</a>
+                <a href="speakers.html" class="nav-link">Speakers</a>
+                <a href="travel.html" class="nav-link">Travel</a>
+                <a href="sponsorship.html" class="nav-link">Sponsorship</a>
+                <a href="submit.html" class="nav-link">Submit Paper</a>
+                <a href="register.html" class="btn btn-accent nav-cta">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">Register Now</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero subpage-hero section-dark">
+        <div class="hero-bg"></div>
+        <div class="hero-gradient"></div>
+        <div class="container hero-container" style="padding-top: 15vh;">
+            <div class="hero-content">
+                <h1 class="hero-title animate-item">
+                    <span class="hero-serif">Conference Programme</span>
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programme Section -->
+    <section class="features-section container py-fluid pb-xxl">
+        <div class="features-grid" style="grid-template-columns: 1fr;">
+            <!-- Card 1: Diagnostic Shuffler (Programme) -->
+            <div class="feature-card shuffler-card animate-on-scroll" id="programme-card" style="min-height: 50vh;">
+                <h3 class="card-title">Event Schedule Overview</h3>
+                <p class="card-desc">Two days of intensive knowledge sharing.</p>
+                <div class="shuffler-container" id="shuffler-container">
+                    <div class="shuffle-item card-accent">Keynote Lectures</div>
+                    <div class="shuffle-item card-primary">Panel Discussions</div>
+                    <div class="shuffle-item card-light">Poster Sessions</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h2>ACSEL 2026</h2>
+                <p>The 13th Asian Conference on Safety & Education in Laboratory</p>
+                <div class="system-status mt-md">
+                    <span class="material-symbols-outlined status-dot">fiber_manual_record</span>
+                    <span class="status-text data-text">System Operational // Registration Open</span>
+                </div>
+            </div>
+            <div class="footer-nav">
+                <h4>Information</h4>
+                <a href="about.html">About</a>
+                <a href="programme.html">Programme</a>
+                <a href="speakers.html">Speakers</a>
+                <a href="travel.html">Travel</a>
+                <a href="sponsorship.html">Sponsorship</a>
+                <a href="submit.html">Submit Paper</a>
+                <a href="register.html">Registration</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

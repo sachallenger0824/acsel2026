@@ -1,0 +1,173 @@
+@page
+@model AcselApp.Pages.RegisterModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | ACSEL 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=IBM+Plex+Mono&family=Outfit:wght@400;600&family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <svg class="noise-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)" opacity="0.05" />
+    </svg>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">ACSEL 2026</a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span class="material-symbols-outlined menu-icon">menu</span>
+                <span class="material-symbols-outlined close-icon">close</span>
+            </label>
+            <div class="nav-menu">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="programme.html" class="nav-link">Programme</a>
+                <a href="speakers.html" class="nav-link">Speakers</a>
+                <a href="travel.html" class="nav-link">Travel</a>
+                <a href="sponsorship.html" class="nav-link">Sponsorship</a>
+                <a href="submit.html" class="nav-link">Submit Paper</a>
+                <a href="/Register" class="btn btn-accent nav-cta">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">Register Now</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero subpage-hero section-dark">
+        <div class="hero-bg"></div>
+        <div class="hero-gradient"></div>
+        <div class="container hero-container" style="padding-top: 15vh;">
+            <div class="hero-content">
+                <h1 class="hero-title animate-item">
+                    <span class="hero-serif">Registration</span>
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section id="register" class="registration-section container py-fluid pb-xxl">
+        <p class="text-center mb-xl animate-on-scroll">Secure your spot for ACSEL 2026.</p>
+
+        @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+        {
+            <div class="animate-on-scroll" style="background: rgba(40, 167, 69, 0.15); border: 1px solid rgba(40, 167, 69, 0.4); padding: 1.5rem; border-radius: 1rem; text-align: center; margin-bottom: 2rem; color: #28a745;">
+                <span class="material-symbols-outlined" style="vertical-align: middle;">check_circle</span>
+                <strong>@Model.SuccessMessage</strong>
+            </div>
+        }
+
+        <div class="pricing-grid animate-on-scroll">
+            <div class="pricing-card">
+                <h3>Early Bird</h3>
+                <p class="ends data-text">Ends 15 August 2026</p>
+                <div class="price">4,000 <span class="currency">TWD</span></div>
+                <p class="tier">Standard</p>
+            </div>
+            <div class="pricing-card featured">
+                <h3>Standard</h3>
+                <p class="ends data-text">After 15 August 2026</p>
+                <div class="price">4,500 <span class="currency">TWD</span></div>
+                <p class="tier">Standard</p>
+            </div>
+            <div class="pricing-card">
+                <h3>Student</h3>
+                <p class="ends data-text">Valid Student ID Required</p>
+                <div class="price">1,500 <span class="currency">TWD</span></div>
+                <p class="tier">Student (Early / Standard)</p>
+            </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="animate-on-scroll" style="margin-top: 4rem;">
+            <h2 class="section-title text-center" style="font-size: 2rem;">Registration Form</h2>
+            <form method="post" style="max-width: 600px; margin: 2rem auto; display: flex; flex-direction: column; gap: 1.5rem;">
+                @Html.AntiForgeryToken()
+
+                <div>
+                    <label for="FullName" style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Full Name *</label>
+                    <input type="text" id="FullName" name="Registration.FullName" required
+                        style="width: 100%; padding: 0.8rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(0,0,0,0.15); font-size: 1rem; font-family: var(--font-body);" />
+                </div>
+
+                <div>
+                    <label for="Email" style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Email *</label>
+                    <input type="email" id="Email" name="Registration.Email" required
+                        style="width: 100%; padding: 0.8rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(0,0,0,0.15); font-size: 1rem; font-family: var(--font-body);" />
+                </div>
+
+                <div>
+                    <label for="Phone" style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Phone</label>
+                    <input type="tel" id="Phone" name="Registration.Phone"
+                        style="width: 100%; padding: 0.8rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(0,0,0,0.15); font-size: 1rem; font-family: var(--font-body);" />
+                </div>
+
+                <div>
+                    <label for="Institution" style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Institution / Organization</label>
+                    <input type="text" id="Institution" name="Registration.Institution"
+                        style="width: 100%; padding: 0.8rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(0,0,0,0.15); font-size: 1rem; font-family: var(--font-body);" />
+                </div>
+
+                <div>
+                    <label for="TicketType" style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Ticket Type *</label>
+                    <select id="TicketType" name="Registration.TicketType" required
+                        style="width: 100%; padding: 0.8rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(0,0,0,0.15); font-size: 1rem; font-family: var(--font-body); background: #fff;">
+                        <option value="">-- Select --</option>
+                        <option value="Early Bird">Early Bird (4,000 TWD)</option>
+                        <option value="Standard">Standard (4,500 TWD)</option>
+                        <option value="Student">Student (1,500 TWD)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="Comments" style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Comments</label>
+                    <textarea id="Comments" name="Registration.Comments" rows="4"
+                        style="width: 100%; padding: 0.8rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(0,0,0,0.15); font-size: 1rem; font-family: var(--font-body); resize: vertical;"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-accent" style="align-self: center; min-width: 200px;">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">Submit Registration</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h2>ACSEL 2026</h2>
+                <p>The 13th Asian Conference on Safety & Education in Laboratory</p>
+                <div class="system-status mt-md">
+                    <span class="material-symbols-outlined status-dot">fiber_manual_record</span>
+                    <span class="status-text data-text">System Operational // Registration Open</span>
+                </div>
+            </div>
+            <div class="footer-nav">
+                <h4>Information</h4>
+                <a href="about.html">About</a>
+                <a href="programme.html">Programme</a>
+                <a href="speakers.html">Speakers</a>
+                <a href="travel.html">Travel</a>
+                <a href="sponsorship.html">Sponsorship</a>
+                <a href="submit.html">Submit Paper</a>
+                <a href="/Register">Registration</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
