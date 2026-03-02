@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | ACSEL 2026</title>
+    <title>管理後台 | ACSEL 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
@@ -554,18 +554,18 @@
             </div>
             <div>
                 <div class="sidebar-brand-text">ACSEL 2026</div>
-                <div class="sidebar-brand-sub">Admin Panel</div>
+                <div class="sidebar-brand-sub">管理面板</div>
             </div>
         </div>
 
         <nav class="sidebar-nav">
             <a href="/Admin" class="nav-item active">
                 <span class="material-symbols-outlined">newspaper</span>
-                Updates & News
+                最新消息管理
             </a>
             <a href="/" class="nav-item">
                 <span class="material-symbols-outlined">language</span>
-                View Website
+                查看網站
             </a>
 
             <div class="nav-spacer"></div>
@@ -573,7 +573,7 @@
             <form method="post" asp-page-handler="Logout" style="margin:0;">
                 <button type="submit" class="nav-item logout" style="width:100%; border:none; background:none; text-align:left; font-family:var(--font);">
                     <span class="material-symbols-outlined">logout</span>
-                    Logout
+                    登出
                 </button>
             </form>
         </nav>
@@ -582,11 +582,11 @@
     <!-- Main Content -->
     <div class="main-content">
         <header class="page-header">
-            <h1 class="page-title">Updates & News Management</h1>
+            <h1 class="page-title">最新消息管理</h1>
             <div class="header-actions">
                 <button class="btn btn-primary" onclick="openCreateModal()" id="createNewBtn">
                     <span class="material-symbols-outlined">add</span>
-                    New Item
+                    新增項目
                 </button>
             </div>
         </header>
@@ -612,15 +612,15 @@
             <!-- Stats -->
             <div class="stats-row">
                 <div class="stat-card">
-                    <div class="stat-label">Total News Items</div>
+                    <div class="stat-label">消息總數</div>
                     <div class="stat-value text-accent">@Model.NewsItems.Count</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Active / Published</div>
+                    <div class="stat-label">已啟用 / 已發布</div>
                     <div class="stat-value text-success">@Model.NewsItems.Count(i => i.IsActive)</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Inactive / Hidden</div>
+                    <div class="stat-label">未啟用 / 已隱藏</div>
                     <div class="stat-value text-warning">@Model.NewsItems.Count(i => !i.IsActive)</div>
                 </div>
             </div>
@@ -629,15 +629,15 @@
             <div class="db-info">
                 <div class="db-info-row">
                     <span class="material-symbols-outlined">database</span>
-                    Database: <code>acsel.db</code> (SQLite)
+                    資料庫：<code>acsel.db</code> (SQLite)
                 </div>
                 <div class="db-info-row">
                     <span class="material-symbols-outlined">table_chart</span>
-                    Table: <code>UpdatesNews</code>
+                    資料表：<code>UpdatesNews</code>
                 </div>
                 <div class="db-info-row">
                     <span class="material-symbols-outlined">info</span>
-                    Items shown below are fetched directly from the database. Create / edit / delete to verify DB operations.
+                    以下項目直接從資料庫讀取。可進行新增、編輯、刪除操作來管理消息。
                 </div>
             </div>
 
@@ -645,7 +645,7 @@
             <div class="modal-overlay" id="createModal">
                 <div class="modal-card">
                     <div class="modal-header">
-                        <h2 class="modal-title">Create New Item</h2>
+                        <h2 class="modal-title">新增項目</h2>
                         <button class="modal-close" onclick="closeCreateModal()">
                             <span class="material-symbols-outlined">close</span>
                         </button>
@@ -653,29 +653,29 @@
                     <form method="post" asp-page-handler="Create">
                         <div style="display:flex;flex-direction:column;gap:1rem;">
                             <div>
-                                <label class="form-label" for="createTitle">Title *</label>
+                                <label class="form-label" for="createTitle">標題 *</label>
                                 <input type="text" id="createTitle" name="NewItem.Title" class="form-input"
-                                       required placeholder="e.g. Registration is now open">
+                                       required placeholder="例：報名已開放">
                             </div>
                             <div>
-                                <label class="form-label" for="createContent">Content *</label>
+                                <label class="form-label" for="createContent">內容 *</label>
                                 <textarea id="createContent" name="NewItem.Content" class="form-textarea"
-                                          required placeholder="News content..."></textarea>
+                                          required placeholder="消息內容..."></textarea>
                             </div>
                             <div>
-                                <label class="form-label" for="createDate">Publish Date</label>
+                                <label class="form-label" for="createDate">發布日期</label>
                                 <input type="date" id="createDate" name="NewItem.PublishDate" class="form-input"
                                        value="@DateTime.Now.ToString("yyyy-MM-dd")">
                             </div>
                             <div class="checkbox-wrapper" style="padding-top:0;">
                                 <input type="checkbox" id="createActive" name="NewItem.IsActive" value="true" checked>
-                                <label for="createActive">Active (visible on website)</label>
+                                <label for="createActive">啟用（在網站上顯示）</label>
                             </div>
                             <div style="display:flex;gap:0.5rem;justify-content:flex-end;padding-top:0.5rem;">
-                                <button type="button" class="btn btn-outline" onclick="closeCreateModal()">Cancel</button>
+                                <button type="button" class="btn btn-outline" onclick="closeCreateModal()">取消</button>
                                 <button type="submit" class="btn btn-primary">
                                     <span class="material-symbols-outlined">save</span>
-                                    Create Item
+                                    建立項目
                                 </button>
                             </div>
                         </div>
@@ -687,7 +687,7 @@
             <div class="modal-overlay" id="editModal">
                 <div class="modal-card">
                     <div class="modal-header">
-                        <h2 class="modal-title">Edit Item</h2>
+                        <h2 class="modal-title">編輯項目</h2>
                         <button class="modal-close" onclick="closeEditModal()">
                             <span class="material-symbols-outlined">close</span>
                         </button>
@@ -696,26 +696,27 @@
                         <input type="hidden" name="EditItem.Id" id="editId">
                         <div style="display:flex;flex-direction:column;gap:1rem;">
                             <div>
-                                <label class="form-label" for="editTitle">Title *</label>
+                                <label class="form-label" for="editTitle">標題 *</label>
                                 <input type="text" id="editTitle" name="EditItem.Title" class="form-input" required>
                             </div>
                             <div>
-                                <label class="form-label" for="editContent">Content *</label>
+                                <label class="form-label" for="editContent">內容 *</label>
                                 <textarea id="editContent" name="EditItem.Content" class="form-textarea" required></textarea>
                             </div>
                             <div>
-                                <label class="form-label" for="editDate">Publish Date</label>
+                                <label class="form-label" for="editDate">發布日期</label>
                                 <input type="date" id="editDate" name="EditItem.PublishDate" class="form-input">
                             </div>
-                            <div class="checkbox-wrapper" style="padding-top:0;">
-                                <input type="checkbox" id="editActive" name="EditItem.IsActive" value="true">
-                                <label for="editActive">Active (visible on website)</label>
+                            <div class="checkbox-wrapper" style="padding-top:0; opacity:0.5; pointer-events:none;">
+                                <input type="checkbox" id="editActive" name="EditItem.IsActive" value="true" disabled>
+                                <input type="hidden" id="editActiveHidden" name="EditItem.IsActive" value="false">
+                                <label for="editActive">啟用（在網站上顯示）— 請使用列表中的啟用/停用按鈕</label>
                             </div>
                             <div style="display:flex;gap:0.5rem;justify-content:flex-end;padding-top:0.5rem;">
-                                <button type="button" class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+                                <button type="button" class="btn btn-outline" onclick="closeEditModal()">取消</button>
                                 <button type="submit" class="btn btn-primary">
                                     <span class="material-symbols-outlined">save</span>
-                                    Save Changes
+                                    儲存變更
                                 </button>
                             </div>
                         </div>
@@ -727,7 +728,7 @@
             <div class="section-header">
                 <div class="section-title">
                     <span class="material-symbols-outlined">table_chart</span>
-                    Database Records — UpdatesNews
+                    資料庫記錄 — UpdatesNews
                 </div>
             </div>
 
@@ -737,11 +738,11 @@
                     <table class="data-table" id="newsTable">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Title / Content</th>
-                                <th>Publish Date</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th>編號</th>
+                                <th>標題 / 內容</th>
+                                <th>發布日期</th>
+                                <th>狀態</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -761,46 +762,56 @@
                                         {
                                             <span class="status-badge active">
                                                 <span class="status-dot"></span>
-                                                Active
+                                                已啟用
                                             </span>
                                         }
                                         else
                                         {
                                             <span class="status-badge inactive">
                                                 <span class="status-dot"></span>
-                                                Inactive
+                                                未啟用
                                             </span>
                                         }
                                     </td>
                                     <td>
                                         <div class="action-btns">
                                             <button class="btn btn-outline btn-sm"
-                                                    onclick="openEditModal(@item.Id, '@item.Title.Replace("'", "\\'")' , '@item.Content.Replace("'", "\\'")' , '@item.PublishDate.ToString("yyyy-MM-dd")', @item.IsActive.ToString().ToLower())">
+                                                    data-id="@item.Id"
+                                                    data-title="@Html.Raw(System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(item.Title))"
+                                                    data-content="@Html.Raw(System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(item.Content))"
+                                                    data-date="@item.PublishDate.ToString("yyyy-MM-dd")"
+                                                    data-active="@item.IsActive.ToString().ToLower()"
+                                                    onclick="openEditFromBtn(this)">
                                                 <span class="material-symbols-outlined">edit</span>
-                                                Edit
+                                                編輯
                                             </button>
 
                                             <form method="post" asp-page-handler="ToggleActive" style="margin:0;">
                                                 <input type="hidden" name="id" value="@item.Id">
                                                 @if (item.IsActive)
                                                 {
-                                                    <button type="submit" class="btn btn-outline btn-sm" title="Deactivate">
+                                                    <button type="submit" class="btn btn-outline btn-sm" title="停用"
+                                                            onclick="return confirm('確定要停用「@Html.Raw(System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(item.Title))」嗎？');">
                                                         <span class="material-symbols-outlined">visibility_off</span>
+                                                        停用
                                                     </button>
                                                 }
                                                 else
                                                 {
-                                                    <button type="submit" class="btn btn-success btn-sm" title="Activate">
+                                                    <button type="submit" class="btn btn-success btn-sm" title="啟用"
+                                                            onclick="return confirm('確定要啟用「@Html.Raw(System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(item.Title))」嗎？');">
                                                         <span class="material-symbols-outlined">visibility</span>
+                                                        啟用
                                                     </button>
                                                 }
                                             </form>
 
-                                            <form method="post" asp-page-handler="Delete" style="margin:0;"
-                                                  onsubmit="return confirm('Are you sure you want to delete &quot;@item.Title&quot;?');">
+                                            <form method="post" asp-page-handler="Delete" style="margin:0;">
                                                 <input type="hidden" name="id" value="@item.Id">
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                                <button type="submit" class="btn btn-danger btn-sm" title="刪除"
+                                                        onclick="return confirm('確定要刪除「@Html.Raw(System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(item.Title))」嗎？此操作無法復原。');">
                                                     <span class="material-symbols-outlined">delete</span>
+                                                    刪除
                                                 </button>
                                             </form>
                                         </div>
@@ -816,8 +827,8 @@
                 <div class="table-wrapper">
                     <div class="empty-state">
                         <span class="material-symbols-outlined">inbox</span>
-                        <p>No news items in database.</p>
-                        <p style="font-size:0.8rem;margin-top:0.5rem;">Click "New Item" to create your first entry.</p>
+                        <p>資料庫中沒有消息項目。</p>
+                        <p style="font-size:0.8rem;margin-top:0.5rem;">點擊「新增項目」來建立第一筆資料。</p>
                     </div>
                 </div>
             }
@@ -825,7 +836,7 @@
     </div>
 
     <script>
-        // Create Modal
+        // 新增彈窗
         function openCreateModal() {
             document.getElementById('createModal').classList.add('show');
             document.getElementById('createTitle').focus();
@@ -834,15 +845,24 @@
             document.getElementById('createModal').classList.remove('show');
         }
 
-        // Edit Modal
+        // 編輯彈窗
         function openEditModal(id, title, content, date, isActive) {
             document.getElementById('editId').value = id;
             document.getElementById('editTitle').value = title;
             document.getElementById('editContent').value = content;
             document.getElementById('editDate').value = date;
             document.getElementById('editActive').checked = isActive;
+            document.getElementById('editActiveHidden').value = isActive ? 'true' : 'false';
             document.getElementById('editModal').classList.add('show');
             document.getElementById('editTitle').focus();
+        }
+        function openEditFromBtn(btn) {
+            var id = btn.getAttribute('data-id');
+            var title = btn.getAttribute('data-title');
+            var content = btn.getAttribute('data-content');
+            var date = btn.getAttribute('data-date');
+            var isActive = btn.getAttribute('data-active') === 'true';
+            openEditModal(id, title, content, date, isActive);
         }
         function closeEditModal() {
             document.getElementById('editModal').classList.remove('show');

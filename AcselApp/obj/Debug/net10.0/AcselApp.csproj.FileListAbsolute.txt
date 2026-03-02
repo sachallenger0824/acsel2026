@@ -221,4 +221,4 @@ C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\bin\Debug\net10.0\runtimes\win-x64\n
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\bin\Debug\net10.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\AcselApp.csproj.AssemblyReference.cache
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\AcselApp.csproj.Up2Date
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\foqcq8wdqb-{0}-8ge0lvdtsv-8ge0lvdtsv.gz
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\foqcq8wdqb-{0}-bwcg1edsxb-bwcg1edsxb.gz

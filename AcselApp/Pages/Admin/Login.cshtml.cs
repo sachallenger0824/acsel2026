@@ -31,7 +31,7 @@ namespace AcselApp.Pages.Admin
                 return RedirectToPage("/Admin/Index");
             }
 
-            ErrorMessage = "Incorrect password. Please try again.";
+            ErrorMessage = "密碼錯誤，請重新輸入。";
             return Page();
         }
     }

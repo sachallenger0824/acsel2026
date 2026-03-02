@@ -56,7 +56,7 @@ namespace AcselApp.Pages.Admin
 
             if (string.IsNullOrWhiteSpace(NewItem.Title) || string.IsNullOrWhiteSpace(NewItem.Content))
             {
-                TempData["ErrorMessage"] = "Title and Content are required.";
+                TempData["ErrorMessage"] = "標題和內容為必填欄位。";
                 return RedirectToPage();
             }
 
@@ -71,7 +71,7 @@ namespace AcselApp.Pages.Admin
             _db.UpdatesNews.Add(item);
             await _db.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = $"News item \"{item.Title}\" created successfully (ID: {item.Id}).";
+            TempData["SuccessMessage"] = $"消息「{item.Title}」建立成功（編號：{item.Id}）。";
             return RedirectToPage();
         }
 
@@ -84,7 +84,7 @@ namespace AcselApp.Pages.Admin
             var existing = await _db.UpdatesNews.FindAsync(EditItem.Id);
             if (existing == null)
             {
-                TempData["ErrorMessage"] = $"News item with ID {EditItem.Id} not found.";
+                TempData["ErrorMessage"] = $"找不到編號為 {EditItem.Id} 的消息項目。";
                 return RedirectToPage();
             }
 
@@ -95,7 +95,7 @@ namespace AcselApp.Pages.Admin
 
             await _db.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = $"News item \"{existing.Title}\" (ID: {existing.Id}) updated successfully.";
+            TempData["SuccessMessage"] = $"消息「{existing.Title}」（編號：{existing.Id}）已成功更新。";
             return RedirectToPage();
         }
 
@@ -108,7 +108,7 @@ namespace AcselApp.Pages.Admin
             var item = await _db.UpdatesNews.FindAsync(id);
             if (item == null)
             {
-                TempData["ErrorMessage"] = $"News item with ID {id} not found.";
+                TempData["ErrorMessage"] = $"找不到編號為 {id} 的消息項目。";
                 return RedirectToPage();
             }
 
@@ -116,7 +116,7 @@ namespace AcselApp.Pages.Admin
             _db.UpdatesNews.Remove(item);
             await _db.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = $"News item \"{title}\" (ID: {id}) deleted successfully.";
+            TempData["SuccessMessage"] = $"消息「{title}」（編號：{id}）已成功刪除。";
             return RedirectToPage();
         }
 
@@ -126,18 +126,18 @@ namespace AcselApp.Pages.Admin
             if (!IsAuthenticated())
                 return RedirectToPage("/Admin/Login");
 
-            var item = await _db.UpdatesNews.FindAsync(id);
-            if (item == null)
+            var toggleItem = await _db.UpdatesNews.FindAsync(id);
+            if (toggleItem == null)
             {
-                TempData["ErrorMessage"] = $"News item with ID {id} not found.";
+                TempData["ErrorMessage"] = $"找不到編號為 {id} 的消息項目。";
                 return RedirectToPage();
             }
 
-            item.IsActive = !item.IsActive;
+            toggleItem.IsActive = !toggleItem.IsActive;
             await _db.SaveChangesAsync();
 
-            var status = item.IsActive ? "activated" : "deactivated";
-            TempData["SuccessMessage"] = $"News item \"{item.Title}\" (ID: {id}) has been {status}.";
+            var status = toggleItem.IsActive ? "已啟用" : "已停用";
+            TempData["SuccessMessage"] = $"消息「{toggleItem.Title}」（編號：{id}）{status}。";
             return RedirectToPage();
         }
 

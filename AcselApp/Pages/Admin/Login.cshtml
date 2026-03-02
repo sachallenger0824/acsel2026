@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | ACSEL 2026</title>
+    <title>管理登入 | ACSEL 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -245,8 +245,8 @@
             <div class="login-icon">
                 <span class="material-symbols-outlined">admin_panel_settings</span>
             </div>
-            <h1 class="login-title">Admin Access</h1>
-            <p class="login-subtitle">ACSEL 2026 — Updates & News Management</p>
+            <h1 class="login-title">管理後台登入</h1>
+            <p class="login-subtitle">ACSEL 2026 — 最新消息管理系統</p>
 
             @if (!string.IsNullOrEmpty(Model.ErrorMessage))
             {
@@ -258,10 +258,10 @@
 
             <form method="post">
                 <div class="form-group">
-                    <label class="form-label" for="passwordInput">Password</label>
+                    <label class="form-label" for="passwordInput">密碼</label>
                     <div class="input-wrapper">
                         <input type="password" id="passwordInput" name="Password" class="form-input"
-                               placeholder="Enter admin password" required autofocus
+                               placeholder="請輸入管理密碼" required autofocus
                                autocomplete="current-password">
                         <span class="material-symbols-outlined">lock</span>
                         <button type="button" class="toggle-password" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility">
@@ -271,12 +271,12 @@
                 </div>
 
                 <button type="submit" class="btn-login" id="loginBtn">
-                    Sign In
+                    登入
                 </button>
             </form>
 
             <div class="login-footer">
-                <a href="/">← Back to ACSEL 2026</a>
+                <a href="/">← 返回 ACSEL 2026</a>
             </div>
         </div>
     </div>
