@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACSEL 2026 | Safety & Education in Laboratory</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=IBM+Plex+Mono&family=Outfit:wght@400;600&family=Plus+Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Noise Overlay -->
+    <svg class="noise-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)" opacity="0.05" />
+    </svg>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">ACSEL 2026</a>
+
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span class="material-symbols-outlined menu-icon">menu</span>
+                <span class="material-symbols-outlined close-icon">close</span>
+            </label>
+
+            <div class="nav-menu">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="programme.html" class="nav-link">Programme</a>
+                <a href="speakers.html" class="nav-link">Speakers</a>
+                <a href="travel.html" class="nav-link">Travel</a>
+                <a href="sponsorship.html" class="nav-link">Sponsorship</a>
+                <a href="submit.html" class="nav-link">Submit Paper</a>
+                <a href="register.html" class="btn btn-accent nav-cta">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">Register Now</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero section-dark">
+        <div class="hero-bg"></div>
+        <div class="hero-gradient"></div>
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="updates-news animate-item">
+                    <span class="pulse-dot"></span>
+                    <span class="update-label">Updates & News:</span>
+                    <span class="update-text">Registration is now open. Early bird ends 15 August 2026.</span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span class="hero-sans animate-item">Safety in Laboratory is the</span><br>
+                    <span class="hero-serif animate-item">Foundation.</span>
+                </h1>
+                <p class="hero-subtitle animate-item">The 13th Asian Conference on Safety & Education in Laboratory</p>
+                <div class="hero-details animate-item">
+                    <p><span class="material-symbols-outlined">calendar_today</span> 19 – 20 November 2026</p>
+                    <p><span class="material-symbols-outlined">location_on</span> Bo-Ying Hall, Da-Hsiao Building,
+                        Chinese Culture University</p>
+                </div>
+
+                <div class="organizer-info animate-item">
+                    <div class="org-block">
+                        <strong>Organised by:</strong><br>
+                        <div class="org-logos">
+                            <img src="images/logo-acsel.png" alt="ACSEL Logo" class="org-logo">
+                            <span>ACSEL</span>
+                        </div>
+                    </div>
+                    <div class="org-block">
+                        <strong>Co-Organised by:</strong><br>
+                        <div class="org-logos">
+                            <img src="images/logo-ccu.png" alt="Chinese Culture University Logo" class="org-logo">
+                            <span>Chinese Culture University (中國文化大學)</span>
+                        </div>
+                        <div class="org-logos">
+                            <span style="padding-left:calc(50px + 1rem);">Taiwan Association for Occupational Safety
+                                (社團法人台灣職業安全學會)</span>
+                        </div>
+                    </div>
+                    <div class="org-block">
+                        <strong>Supported by:</strong><br>
+                        <div class="org-logos">
+                            <img src="images/logo-moe.png" alt="Ministry of Education Logo" class="org-logo">
+                            <span>Ministry of Education<br>Republic of China (Taiwan) (中華民國教育部)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="animate-item">
+                    <a href="register.html" class="btn btn-accent hero-btn">
+                        <span class="btn-bg"></span>
+                        <span class="btn-text">Register Now</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h2>ACSEL 2026</h2>
+                <p>The 13th Asian Conference on Safety & Education in Laboratory</p>
+                <div class="system-status mt-md">
+                    <span class="material-symbols-outlined status-dot">fiber_manual_record</span>
+                    <span class="status-text data-text">System Operational // Registration Open</span>
+                </div>
+            </div>
+            <div class="footer-nav">
+                <h4>Information</h4>
+                <a href="about.html">About</a>
+                <a href="programme.html">Programme</a>
+                <a href="speakers.html">Speakers</a>
+                <a href="travel.html">Travel</a>
+                <a href="sponsorship.html">Sponsorship</a>
+                <a href="submit.html">Submit Paper</a>
+                <a href="register.html">Registration</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
