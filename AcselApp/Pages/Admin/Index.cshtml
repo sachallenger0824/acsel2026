@@ -1,0 +1,881 @@
+@page
+@model AcselApp.Pages.Admin.IndexModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Admin Dashboard";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | ACSEL 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.85);
+            --bg-card-solid: #111827;
+            --bg-input: #0d1224;
+            --border-color: rgba(99, 102, 241, 0.15);
+            --border-hover: rgba(99, 102, 241, 0.35);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.1);
+            --success-border: rgba(16, 185, 129, 0.3);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.1);
+            --error-border: rgba(239, 68, 68, 0.3);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.1);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --font: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --sidebar-width: 260px;
+            --header-height: 64px;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0;
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem;
+            display: flex; flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+        .sidebar-brand-icon {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .sidebar-brand-icon .material-symbols-outlined { font-size: 20px; color: white; }
+        .sidebar-brand-text {
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: -0.02em;
+        }
+        .sidebar-brand-sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-nav { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+
+        .nav-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.7rem 0.85rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .nav-item:hover {
+            background: rgba(99, 102, 241, 0.08);
+            color: var(--text-primary);
+        }
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--accent-light);
+        }
+        .nav-item .material-symbols-outlined { font-size: 20px; }
+
+        .nav-spacer { flex: 1; }
+
+        .nav-item.logout {
+            color: var(--error);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            margin-top: 0.5rem;
+        }
+        .nav-item.logout:hover {
+            background: var(--error-bg);
+        }
+
+        /* ── Main Content ── */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        .page-header {
+            position: sticky; top: 0; z-index: 50;
+            height: var(--header-height);
+            background: rgba(10, 14, 26, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center;
+            padding: 0 2rem;
+        }
+        .page-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            flex: 1;
+        }
+        .header-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+        .page-body {
+            padding: 2rem;
+            max-width: 1200px;
+        }
+
+        /* ── Alert Banners ── */
+        .alert {
+            padding: 0.85rem 1.25rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 0.6rem;
+            font-size: 0.875rem;
+            animation: slideDown 0.4s ease;
+        }
+        .alert .material-symbols-outlined { font-size: 20px; }
+
+        .alert-success {
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            color: #6ee7b7;
+        }
+        .alert-success .material-symbols-outlined { color: var(--success); }
+
+        .alert-error {
+            background: var(--error-bg);
+            border: 1px solid var(--error-border);
+            color: #fca5a5;
+        }
+        .alert-error .material-symbols-outlined { color: var(--error); }
+
+        @@keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Stats Row ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.25rem 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.3s;
+        }
+        .stat-card:hover { border-color: var(--border-hover); }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+        }
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .stat-value.text-accent { color: var(--accent-light); }
+        .stat-value.text-success { color: var(--success); }
+        .stat-value.text-warning { color: var(--warning); }
+
+        /* ── Section header ── */
+        .section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .section-title .material-symbols-outlined { font-size: 20px; color: var(--accent-light); }
+
+        /* ── Create Form Card ── */
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-grid .full-width { grid-column: 1 / -1; }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: var(--font);
+            font-size: 0.875rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .form-input:focus, .form-textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .form-textarea { resize: vertical; min-height: 80px; }
+
+        .checkbox-wrapper {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding-top: 1.5rem;
+        }
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 18px; height: 18px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+        .checkbox-wrapper label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.6rem 1.2rem;
+            border: none; border-radius: var(--radius-sm);
+            font-family: var(--font);
+            font-size: 0.825rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn .material-symbols-outlined { font-size: 18px; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        .btn-outline:hover {
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .btn-danger {
+            background: var(--error-bg);
+            border: 1px solid var(--error-border);
+            color: #fca5a5;
+        }
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error);
+        }
+
+        .btn-success {
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            color: #6ee7b7;
+        }
+        .btn-success:hover {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.7rem;
+            font-size: 0.75rem;
+        }
+        .btn-sm .material-symbols-outlined { font-size: 16px; }
+
+        /* ── Table ── */
+        .table-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th {
+            text-align: left;
+            padding: 0.85rem 1.25rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(99, 102, 241, 0.03);
+        }
+        .data-table td {
+            padding: 1rem 1.25rem;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .data-table tr:hover td {
+            background: rgba(99, 102, 241, 0.03);
+        }
+
+        .id-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 32px;
+            padding: 0.2rem 0.4rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .status-badge.active {
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            color: #6ee7b7;
+        }
+        .status-badge.inactive {
+            background: rgba(100, 116, 139, 0.15);
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            color: #94a3b8;
+        }
+        .status-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+        }
+        .status-badge.active .status-dot { background: var(--success); }
+        .status-badge.inactive .status-dot { background: #64748b; }
+
+        .cell-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+        .cell-content {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cell-date {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .action-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+        /* ── Modal/Overlay ── */
+        .modal-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .modal-card {
+            background: var(--bg-card-solid);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .modal-close {
+            background: none; border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            transition: color 0.2s;
+        }
+        .modal-close:hover { color: var(--text-primary); }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @@keyframes modalSlide {
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ── DB Info Section ── */
+        .db-info {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .db-info-row {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+        }
+        .db-info-row:last-child { margin-bottom: 0; }
+        .db-info-row .material-symbols-outlined { font-size: 16px; color: var(--accent-light); }
+        .db-info-row code {
+            font-family: var(--font-mono);
+            background: rgba(99, 102, 241, 0.08);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        /* ── Empty state ── */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+        .empty-state .material-symbols-outlined {
+            font-size: 48px;
+            margin-bottom: 0.75rem;
+            opacity: 0.3;
+        }
+
+        /* ── Responsive ── */
+        @@media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+            .form-grid { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .page-body { padding: 1rem; }
+            .data-table { font-size: 0.8rem; }
+            .data-table th, .data-table td { padding: 0.7rem 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-icon">
+                <span class="material-symbols-outlined">dashboard</span>
+            </div>
+            <div>
+                <div class="sidebar-brand-text">ACSEL 2026</div>
+                <div class="sidebar-brand-sub">Admin Panel</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/Admin" class="nav-item active">
+                <span class="material-symbols-outlined">newspaper</span>
+                Updates & News
+            </a>
+            <a href="/" class="nav-item">
+                <span class="material-symbols-outlined">language</span>
+                View Website
+            </a>
+
+            <div class="nav-spacer"></div>
+
+            <form method="post" asp-page-handler="Logout" style="margin:0;">
+                <button type="submit" class="nav-item logout" style="width:100%; border:none; background:none; text-align:left; font-family:var(--font);">
+                    <span class="material-symbols-outlined">logout</span>
+                    Logout
+                </button>
+            </form>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="page-header">
+            <h1 class="page-title">Updates & News Management</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="openCreateModal()" id="createNewBtn">
+                    <span class="material-symbols-outlined">add</span>
+                    New Item
+                </button>
+            </div>
+        </header>
+
+        <div class="page-body">
+
+            <!-- Alerts -->
+            @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+            {
+                <div class="alert alert-success" id="successAlert">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    @Model.SuccessMessage
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-error" id="errorAlert">
+                    <span class="material-symbols-outlined">error</span>
+                    @Model.ErrorMessage
+                </div>
+            }
+
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-label">Total News Items</div>
+                    <div class="stat-value text-accent">@Model.NewsItems.Count</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active / Published</div>
+                    <div class="stat-value text-success">@Model.NewsItems.Count(i => i.IsActive)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Inactive / Hidden</div>
+                    <div class="stat-value text-warning">@Model.NewsItems.Count(i => !i.IsActive)</div>
+                </div>
+            </div>
+
+            <!-- DB Info -->
+            <div class="db-info">
+                <div class="db-info-row">
+                    <span class="material-symbols-outlined">database</span>
+                    Database: <code>acsel.db</code> (SQLite)
+                </div>
+                <div class="db-info-row">
+                    <span class="material-symbols-outlined">table_chart</span>
+                    Table: <code>UpdatesNews</code>
+                </div>
+                <div class="db-info-row">
+                    <span class="material-symbols-outlined">info</span>
+                    Items shown below are fetched directly from the database. Create / edit / delete to verify DB operations.
+                </div>
+            </div>
+
+            <!-- Create Form (shown in modal) -->
+            <div class="modal-overlay" id="createModal">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Create New Item</h2>
+                        <button class="modal-close" onclick="closeCreateModal()">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                    <form method="post" asp-page-handler="Create">
+                        <div style="display:flex;flex-direction:column;gap:1rem;">
+                            <div>
+                                <label class="form-label" for="createTitle">Title *</label>
+                                <input type="text" id="createTitle" name="NewItem.Title" class="form-input"
+                                       required placeholder="e.g. Registration is now open">
+                            </div>
+                            <div>
+                                <label class="form-label" for="createContent">Content *</label>
+                                <textarea id="createContent" name="NewItem.Content" class="form-textarea"
+                                          required placeholder="News content..."></textarea>
+                            </div>
+                            <div>
+                                <label class="form-label" for="createDate">Publish Date</label>
+                                <input type="date" id="createDate" name="NewItem.PublishDate" class="form-input"
+                                       value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="checkbox-wrapper" style="padding-top:0;">
+                                <input type="checkbox" id="createActive" name="NewItem.IsActive" value="true" checked>
+                                <label for="createActive">Active (visible on website)</label>
+                            </div>
+                            <div style="display:flex;gap:0.5rem;justify-content:flex-end;padding-top:0.5rem;">
+                                <button type="button" class="btn btn-outline" onclick="closeCreateModal()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="material-symbols-outlined">save</span>
+                                    Create Item
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div class="modal-overlay" id="editModal">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Edit Item</h2>
+                        <button class="modal-close" onclick="closeEditModal()">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                    <form method="post" asp-page-handler="Edit" id="editForm">
+                        <input type="hidden" name="EditItem.Id" id="editId">
+                        <div style="display:flex;flex-direction:column;gap:1rem;">
+                            <div>
+                                <label class="form-label" for="editTitle">Title *</label>
+                                <input type="text" id="editTitle" name="EditItem.Title" class="form-input" required>
+                            </div>
+                            <div>
+                                <label class="form-label" for="editContent">Content *</label>
+                                <textarea id="editContent" name="EditItem.Content" class="form-textarea" required></textarea>
+                            </div>
+                            <div>
+                                <label class="form-label" for="editDate">Publish Date</label>
+                                <input type="date" id="editDate" name="EditItem.PublishDate" class="form-input">
+                            </div>
+                            <div class="checkbox-wrapper" style="padding-top:0;">
+                                <input type="checkbox" id="editActive" name="EditItem.IsActive" value="true">
+                                <label for="editActive">Active (visible on website)</label>
+                            </div>
+                            <div style="display:flex;gap:0.5rem;justify-content:flex-end;padding-top:0.5rem;">
+                                <button type="button" class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="material-symbols-outlined">save</span>
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- News Items Table -->
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="material-symbols-outlined">table_chart</span>
+                    Database Records — UpdatesNews
+                </div>
+            </div>
+
+            @if (Model.NewsItems.Count > 0)
+            {
+                <div class="table-wrapper">
+                    <table class="data-table" id="newsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title / Content</th>
+                                <th>Publish Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.NewsItems)
+                            {
+                                <tr>
+                                    <td><span class="id-badge">@item.Id</span></td>
+                                    <td>
+                                        <div class="cell-title">@item.Title</div>
+                                        <div class="cell-content">@item.Content</div>
+                                    </td>
+                                    <td>
+                                        <span class="cell-date">@item.PublishDate.ToString("yyyy-MM-dd")</span>
+                                    </td>
+                                    <td>
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="status-badge active">
+                                                <span class="status-dot"></span>
+                                                Active
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status-badge inactive">
+                                                <span class="status-dot"></span>
+                                                Inactive
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="action-btns">
+                                            <button class="btn btn-outline btn-sm"
+                                                    onclick="openEditModal(@item.Id, '@item.Title.Replace("'", "\\'")' , '@item.Content.Replace("'", "\\'")' , '@item.PublishDate.ToString("yyyy-MM-dd")', @item.IsActive.ToString().ToLower())">
+                                                <span class="material-symbols-outlined">edit</span>
+                                                Edit
+                                            </button>
+
+                                            <form method="post" asp-page-handler="ToggleActive" style="margin:0;">
+                                                <input type="hidden" name="id" value="@item.Id">
+                                                @if (item.IsActive)
+                                                {
+                                                    <button type="submit" class="btn btn-outline btn-sm" title="Deactivate">
+                                                        <span class="material-symbols-outlined">visibility_off</span>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="submit" class="btn btn-success btn-sm" title="Activate">
+                                                        <span class="material-symbols-outlined">visibility</span>
+                                                    </button>
+                                                }
+                                            </form>
+
+                                            <form method="post" asp-page-handler="Delete" style="margin:0;"
+                                                  onsubmit="return confirm('Are you sure you want to delete &quot;@item.Title&quot;?');">
+                                                <input type="hidden" name="id" value="@item.Id">
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                                    <span class="material-symbols-outlined">delete</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="table-wrapper">
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined">inbox</span>
+                        <p>No news items in database.</p>
+                        <p style="font-size:0.8rem;margin-top:0.5rem;">Click "New Item" to create your first entry.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script>
+        // Create Modal
+        function openCreateModal() {
+            document.getElementById('createModal').classList.add('show');
+            document.getElementById('createTitle').focus();
+        }
+        function closeCreateModal() {
+            document.getElementById('createModal').classList.remove('show');
+        }
+
+        // Edit Modal
+        function openEditModal(id, title, content, date, isActive) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editTitle').value = title;
+            document.getElementById('editContent').value = content;
+            document.getElementById('editDate').value = date;
+            document.getElementById('editActive').checked = isActive;
+            document.getElementById('editModal').classList.add('show');
+            document.getElementById('editTitle').focus();
+        }
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('show');
+        }
+
+        // Close modals on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    overlay.classList.remove('show');
+                }
+            });
+        });
+
+        // Close modals on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.show').forEach(function(m) {
+                    m.classList.remove('show');
+                });
+            }
+        });
+
+        // Auto-dismiss alerts after 5 seconds
+        setTimeout(function() {
+            var alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(a) {
+                a.style.transition = 'opacity 0.5s';
+                a.style.opacity = '0';
+                setTimeout(function() { a.style.display = 'none'; }, 500);
+            });
+        }, 5000);
+    </script>
+
+</body>
+</html>

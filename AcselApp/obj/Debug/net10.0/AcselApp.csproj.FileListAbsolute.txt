@@ -90,7 +90,6 @@ C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\ha9810l
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\xve4xexg1r-{0}-7h8om5mzln-7h8om5mzln.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\ql3n59zpn9-{0}-s5r1nlnply-s5r1nlnply.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\m5avj3boa2-{0}-dz8m41temm-dz8m41temm.gz
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\foqcq8wdqb-{0}-xfeiba2hhm-xfeiba2hhm.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\s3cb7q5wng-{0}-r06uziudo9-r06uziudo9.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\famsky21d8-{0}-x8zwkpti50-x8zwkpti50.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\pz35qvsr8c-{0}-jwii1qv2yg-jwii1qv2yg.gz
@@ -222,3 +221,4 @@ C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\bin\Debug\net10.0\runtimes\win-x64\n
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\bin\Debug\net10.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\AcselApp.csproj.AssemblyReference.cache
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\AcselApp.csproj.Up2Date
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\foqcq8wdqb-{0}-8ge0lvdtsv-8ge0lvdtsv.gz
