@@ -21,10 +21,8 @@ C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\rjsmcshtml.dswa.ca
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\scopedcss\bundle\AcselApp.styles.css
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\scopedcss\projectbundle\AcselApp.bundle.scp.css
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\0d3aa2wumx-{0}-azc9op2mxu-azc9op2mxu.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\eh8l9c9gbz-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\45kfawawei-{0}-61n19gt1b8-61n19gt1b8.gz
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\7p462ffuac-{0}-1dt2zttgvk-1dt2zttgvk.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\cddli85lmk-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\3lj5hvqinv-{0}-bqjiyaj88i-bqjiyaj88i.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\9urlsry9jo-{0}-c2jlpeoesf-c2jlpeoesf.gz
@@ -86,12 +84,6 @@ C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\ugujsez
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\xalgbxq4ti-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\3b43jap9pu-{0}-mlv21k5csn-mlv21k5csn.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\ngwnu6wreg-{0}-40t1k0tyvb-40t1k0tyvb.gz
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\ha9810l3ew-{0}-26y2e7yap7-26y2e7yap7.gz
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\xve4xexg1r-{0}-7h8om5mzln-7h8om5mzln.gz
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\ql3n59zpn9-{0}-s5r1nlnply-s5r1nlnply.gz
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\m5avj3boa2-{0}-dz8m41temm-dz8m41temm.gz
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\s3cb7q5wng-{0}-r06uziudo9-r06uziudo9.gz
-C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\famsky21d8-{0}-x8zwkpti50-x8zwkpti50.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\pz35qvsr8c-{0}-jwii1qv2yg-jwii1qv2yg.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\oz31gmsdv7-{0}-jwii1qv2yg-jwii1qv2yg.gz
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\staticwebassets.build.json
@@ -222,3 +214,11 @@ C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\bin\Debug\net10.0\runtimes\win-x86\n
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\AcselApp.csproj.AssemblyReference.cache
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\AcselApp.csproj.Up2Date
 C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\foqcq8wdqb-{0}-bwcg1edsxb-bwcg1edsxb.gz
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\0d3aa2wumx-{0}-0ph5x8quqa-0ph5x8quqa.gz
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\7p462ffuac-{0}-0dvpap7bzr-0dvpap7bzr.gz
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\ha9810l3ew-{0}-cv3j51jbh5-cv3j51jbh5.gz
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\xve4xexg1r-{0}-6w9act50im-6w9act50im.gz
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\ql3n59zpn9-{0}-e9d2ieubu4-e9d2ieubu4.gz
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\m5avj3boa2-{0}-av8f1zkxa8-av8f1zkxa8.gz
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\s3cb7q5wng-{0}-0jgh1ckbtk-0jgh1ckbtk.gz
+C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\obj\Debug\net10.0\compressed\famsky21d8-{0}-e6wbc4b5yv-e6wbc4b5yv.gz
