@@ -38,6 +38,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Support virtual directory (set "PathBase" in appsettings.json, e.g. "/acsel")
+var pathBase = app.Configuration["PathBase"];
+if (!string.IsNullOrEmpty(pathBase))
+    app.UsePathBase(pathBase);
+
 app.UseRouting();
 
 app.UseSession();
