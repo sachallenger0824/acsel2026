@@ -39,7 +39,7 @@
                 <a href="travel.html" class="nav-link">Travel</a>
                 <a href="sponsorship.html" class="nav-link">Sponsorship</a>
                 <a href="submit.html" class="nav-link" style="white-space:nowrap;">Submit Paper</a>
-                <a href="register.html" class="btn btn-accent nav-cta">
+                <a href="/Register" class="btn btn-accent nav-cta">
                     <span class="btn-bg"></span>
                     <span class="btn-text">Register</span>
                 </a>
@@ -60,27 +60,114 @@
     </section>
 
     <!-- Submit Paper Section -->
-    <section class="features-section container py-fluid pb-xxl">
-        <div class="features-grid" style="grid-template-columns: 1fr;">
-            <!-- Card 3: Cursor Protocol Scheduler (Submit Paper) -->
-            <div id="submit" class="feature-card scheduler-card animate-on-scroll" style="min-height: 50vh;">
-                <div class="scheduler-info" style="margin-bottom: 2rem;">
-                    <h3 class="card-title">Call for Papers</h3>
-                    <p class="card-desc">Share your research and findings with the global safety community.</p>
-                    <button class="btn btn-primary scheduler-btn mt-md">Submit Now</button>
-                </div>
-                <div class="scheduler-container">
-                    <div class="grid-days">
-                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
-                    </div>
-                    <div class="grid-cells" id="scheduler-grid">
-                        <!-- cells via JS -->
-                    </div>
-                    <span class="scheduler-cursor material-symbols-outlined" id="scheduler-cursor">ads_click</span>
+    <section class="container py-fluid pb-xxl" style="max-width: 860px;">
+        <div class="animate-on-scroll">
+            <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem;">Submit Your Paper for ACSEL 2026!</h2>
+            <p style="opacity: 0.7; margin-bottom: 1.5rem;">ACSEL 2026, with the theme <strong>&lsquo;AI in Accident Prevention&rsquo;</strong>, focuses on how artificial intelligence can enhance accident prevention, autonomous risk management, and the transformation and innovation of laboratory safety education.</p>
+
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Submit Abstract for Oral or Poster Presentation!</h3>
+
+            <!-- Submission Guidelines -->
+            <div style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 2rem;">
+                <h4 style="font-weight: 700; margin: 0 0 0.75rem; font-size: 1rem;">Abstract Submission Guidelines</h4>
+                <p style="margin: 0 0 0.75rem; opacity: 0.8;">Submissions are encouraged in (but not limited to) the following areas:</p>
+                <ul style="margin: 0 0 1.25rem 1.25rem; line-height: 1.8; opacity: 0.8;">
+                    <li>AI-Based Risk Prediction</li>
+                    <li>Intelligent Laboratory Safety Monitoring</li>
+                    <li>AI Early Warning Systems</li>
+                    <li>AI for Safety Education</li>
+                    <li>Human Behavior Analysis in Accident Prevention</li>
+                    <li>AI and Smart Laboratory Systems</li>
+                    <li>AI-Based Accident Analysis</li>
+                    <li>AI for Emergency Response</li>
+                    <li>Laboratory Safety and Health Management</li>
+                    <li>Laboratory Safety and Health Compliance</li>
+                    <li>Laboratory Waste Treatment and Management</li>
+                    <li>Other Laboratory Safety and Health Related Issues</li>
+                </ul>
+                <p style="margin: 0; opacity: 0.8;">Abstract should be <strong>no more than 100 words</strong>. Each author with an accepted abstract will be invited to give an oral or poster presentation.</p>
+                <p style="margin: 0.5rem 0 0; font-size: 0.875rem; opacity: 0.6;">(Based on these submissions we will make a decision as whether or not to accept your contribution and arrange the conference sessions.)</p>
+            </div>
+
+            <!-- Abstract Format Button -->
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <button type="button" onclick="openAbstractModal()" class="btn btn-accent" style="min-width: 260px;">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text"><span class="material-symbols-outlined" style="font-size: 1.1rem; vertical-align: middle; margin-right: 0.4rem;">description</span>Abstract Format &amp; Submission</span>
+                </button>
+            </div>
+
+            <!-- Important Dates -->
+            <div style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem;">
+                <h4 style="font-weight: 700; margin: 0 0 1rem; font-size: 1rem;">Important Dates</h4>
+                <div style="display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1.5rem; font-size: 0.95rem;">
+                    <span class="data-text" style="font-weight: 600; white-space: nowrap;">15 June 2026</span>
+                    <span>Abstract Submission Deadline</span>
+                    <span class="data-text" style="font-weight: 600; white-space: nowrap;">30 June 2026 onwards</span>
+                    <span>Abstract Acceptance Notification</span>
+                    <span class="data-text" style="font-weight: 600; white-space: nowrap;">15 September 2026</span>
+                    <span>Full Presentation Submission Deadline (Oral &amp; Poster)</span>
+                    <span class="data-text" style="font-weight: 600; white-space: nowrap;">19–20 November 2026</span>
+                    <span>Conference</span>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Abstract Format Modal -->
+    <div id="abstractModal" role="dialog" aria-modal="true" aria-labelledby="abstractModalTitle"
+        style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.55); overflow-y:auto; padding: 2rem 1rem;">
+        <div style="background:#fff; max-width:680px; margin:auto; border-radius:1rem; padding:2rem 2rem 1.5rem; position:relative; box-shadow:0 24px 48px rgba(0,0,0,0.18);">
+            <button type="button" onclick="closeAbstractModal()" aria-label="Close"
+                style="position:absolute; top:1rem; right:1rem; background:none; border:none; cursor:pointer; font-size:1.4rem; line-height:1; opacity:0.5;">&#x2715;</button>
+
+            <h2 id="abstractModalTitle" style="font-size:1.35rem; font-weight:700; margin:0 0 0.25rem;">Abstract Format &amp; Email Submission</h2>
+            <p style="font-size:0.875rem; opacity:0.6; margin:0 0 1.5rem;">Please follow the format below and send your abstract via email.</p>
+
+            <!-- Abstract Template -->
+            <div style="background:rgba(0,0,0,0.03); border:1px solid rgba(0,0,0,0.1); border-radius:0.75rem; padding:1.5rem; font-size:0.9rem; line-height:1.8; margin-bottom:1.5rem; font-family:'IBM Plex Mono', monospace;">
+                <p style="margin:0 0 0.75rem; text-align:center; font-weight:700; font-size:1rem;">ACSEL 2026</p>
+                <p style="margin:0 0 0.25rem; text-align:center; font-weight:700; font-style:italic;">（Title of the Abstract）</p>
+                <p style="margin:0 0 0.25rem; text-align:center;">First Author<sup>1</sup>, Second Author<sup>2</sup>, Third Author<sup>3</sup></p>
+                <p style="margin:0; text-align:center; font-size:0.8rem; opacity:0.7;"><sup>1</sup> Department / Institute, University, Country</p>
+                <p style="margin:0; text-align:center; font-size:0.8rem; opacity:0.7;"><sup>2</sup> Department / Institute, University, Country</p>
+                <p style="margin:0 0 0.75rem; text-align:center; font-size:0.8rem; opacity:0.7;">Corresponding author: email@example.com</p>
+                <hr style="border:none; border-top:1px solid rgba(0,0,0,0.1); margin:0.75rem 0;">
+                <p style="margin:0 0 0.5rem; font-weight:700;">Abstract</p>
+                <p style="margin:0 0 0.75rem; opacity:0.8;"><strong>Background:</strong> Briefly describe the laboratory safety problem or research background. <strong>Method:</strong> Explain the research method, experiment design, or AI technology used. <strong>Results:</strong> Summarize the key findings or expected outcomes. <strong>Conclusion:</strong> Explain the significance of this study for laboratory safety and accident prevention. <em>(Total length about 100 words.)</em></p>
+                <p style="margin:0; opacity:0.8;"><strong>Keywords:</strong> Laboratory Safety; Artificial Intelligence; Accident Prevention; Risk Management</p>
+            </div>
+
+            <div style="border:1px dashed rgba(0,0,0,0.2); border-radius:0.5rem; padding:1rem; margin-bottom:1.5rem; font-size:0.9rem;">
+                <p style="margin:0 0 0.5rem; font-weight:700;"><span class="material-symbols-outlined" style="font-size:1rem; vertical-align:middle; margin-right:0.3rem;">mail</span>Send your abstract to:</p>
+                <p style="margin:0; font-weight:600; color:var(--accent, #1a73e8);">acsel2026.tw@gmail.com</p>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end;">
+                <button type="button" onclick="closeAbstractModal()"
+                    style="padding:0.6rem 1.5rem; border:1px solid rgba(0,0,0,0.18); border-radius:0.5rem; background:transparent; font:inherit; font-size:0.9rem; cursor:pointer;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openAbstractModal() {
+            document.getElementById('abstractModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeAbstractModal() {
+            document.getElementById('abstractModal').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+        document.getElementById('abstractModal').addEventListener('click', function(e) {
+            if (e.target === this) closeAbstractModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('abstractModal').style.display === 'block') {
+                closeAbstractModal();
+            }
+        });
+    </script>
 
     <footer class="footer">
         <div class="container footer-grid">
@@ -100,7 +187,7 @@
                 <a href="travel.html">Travel</a>
                 <a href="sponsorship.html">Sponsorship</a>
                 <a href="submit.html">Submit</a>
-                <a href="register.html">Registration</a>
+                <a href="/Register">Registration</a>
             </div>
         </div>
     </footer>

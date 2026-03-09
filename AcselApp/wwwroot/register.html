@@ -39,7 +39,7 @@
                 <a href="travel.html" class="nav-link">Travel</a>
                 <a href="sponsorship.html" class="nav-link">Sponsorship</a>
                 <a href="submit.html" class="nav-link" style="white-space:nowrap;">Submit Paper</a>
-                <a href="register.html" class="btn btn-accent nav-cta">
+                <a href="/Register" class="btn btn-accent nav-cta">
                     <span class="btn-bg"></span>
                     <span class="btn-text">Register</span>
                 </a>
@@ -93,6 +93,207 @@
         </div>
     </section>
 
+    <!-- Registration Form Section -->
+    <section class="container pb-xxl" style="padding-top: 0; max-width: 720px;">
+        <div class="animate-on-scroll">
+            <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem;">Registration Form</h2>
+            <p style="opacity: 0.65; margin-bottom: 2.5rem;">Please fill in all required fields to complete your registration.</p>
+
+            <form id="registrationForm" action="/Register" method="post" novalidate
+                style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                <!-- Section 1: Personal Information -->
+                <fieldset style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem; margin: 0;">
+                    <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">Personal Information</legend>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                            <label for="firstName" style="font-size: 0.875rem; font-weight: 600;">First Name <span style="color:#e53e3e;">*</span></label>
+                            <input type="text" id="firstName" name="firstName" required autocomplete="given-name"
+                                placeholder="First Name"
+                                style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                            <label for="lastName" style="font-size: 0.875rem; font-weight: 600;">Last Name <span style="color:#e53e3e;">*</span></label>
+                            <input type="text" id="lastName" name="lastName" required autocomplete="family-name"
+                                placeholder="Last Name"
+                                style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
+                        <label for="email" style="font-size: 0.875rem; font-weight: 600;">Email Address <span style="color:#e53e3e;">*</span></label>
+                        <input type="email" id="email" name="email" required autocomplete="email"
+                            placeholder="your@email.com"
+                            style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
+                        <label for="affiliation" style="font-size: 0.875rem; font-weight: 600;">Affiliation / Organization <span style="color:#e53e3e;">*</span></label>
+                        <input type="text" id="affiliation" name="affiliation" required autocomplete="organization"
+                            placeholder="Institution or organization name"
+                            style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                        <label for="title" style="font-size: 0.875rem; font-weight: 600;">Title / Position <span style="color:#e53e3e;">*</span></label>
+                        <input type="text" id="title" name="title" required autocomplete="organization-title"
+                            placeholder="e.g. Professor, Researcher, Student"
+                            style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
+                    </div>
+                </fieldset>
+
+                <!-- Section 2: Participation -->
+                <fieldset style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem; margin: 0;">
+                    <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">Participation</legend>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
+                        <label for="participationType" style="font-size: 0.875rem; font-weight: 600;">Participation Type <span style="color:#e53e3e;">*</span></label>
+                        <select id="participationType" name="participationType" required
+                            style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box; appearance: none; cursor: pointer;">
+                            <option value="" disabled selected>Select participation type</option>
+                            <option value="oral">Oral Presentation</option>
+                            <option value="poster">Poster Presentation</option>
+                            <option value="attendee">Attendee</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                        <label for="paperTitle" style="font-size: 0.875rem; font-weight: 600;">Paper / Poster Title <span style="opacity:0.5; font-weight:400;">(if applicable)</span></label>
+                        <input type="text" id="paperTitle" name="paperTitle"
+                            placeholder="Leave blank if attending only"
+                            style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
+                    </div>
+                </fieldset>
+
+                <!-- Section 3: Payment -->
+                <fieldset style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem; margin: 0;">
+                    <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">Payment</legend>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
+                        <label for="feeCategory" style="font-size: 0.875rem; font-weight: 600;">Registration Fee Category <span style="color:#e53e3e;">*</span></label>
+                        <select id="feeCategory" name="feeCategory" required
+                            style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box; appearance: none; cursor: pointer;">
+                            <option value="" disabled selected>Select fee category</option>
+                            <option value="early_bird">Early Bird (by 15 August 2026) — 4,000 TWD</option>
+                            <option value="regular">Regular (after 15 August 2026) — 4,500 TWD</option>
+                            <option value="student">Student — 1,500 TWD</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                        <label for="paymentMethod" style="font-size: 0.875rem; font-weight: 600;">Payment Method <span style="color:#e53e3e;">*</span></label>
+                        <select id="paymentMethod" name="paymentMethod" required
+                            style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box; appearance: none; cursor: pointer;">
+                            <option value="" disabled selected>Select payment method</option>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="bank_transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <!-- Agreement -->
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 1.25rem; border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem;">
+                    <input type="checkbox" id="agreement" name="agreement" required
+                        style="margin-top: 0.15rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; cursor: pointer; accent-color: var(--accent, #1a73e8);">
+                    <label style="font-size: 0.9rem; line-height: 1.5; cursor: pointer;">
+                        I have read and agree to the <button type="button" onclick="openTermsModal()" style="background:none;border:none;padding:0;font:inherit;font-weight:700;color:var(--accent,#1a73e8);cursor:pointer;text-decoration:underline;">registration terms and conditions</button> of ACSEL 2026. <span style="color:#e53e3e;">*</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-accent" style="align-self: flex-start; min-width: 200px;">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">Submit Registration</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsModalTitle"
+        style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.55); overflow-y:auto; padding: 2rem 1rem;">
+        <div style="background:#fff; max-width:640px; margin:auto; border-radius:1rem; padding:2rem 2rem 1.5rem; position:relative; box-shadow:0 24px 48px rgba(0,0,0,0.18);">
+            <button type="button" onclick="closeTermsModal(false)" aria-label="Close"
+                style="position:absolute; top:1rem; right:1rem; background:none; border:none; cursor:pointer; font-size:1.4rem; line-height:1; opacity:0.5;">&#x2715;</button>
+
+            <h2 id="termsModalTitle" style="font-size:1.35rem; font-weight:700; margin:0 0 0.25rem;">Agreement &amp; Consent</h2>
+            <p style="font-size:0.875rem; opacity:0.6; margin:0 0 1.5rem;">Please read the following registration terms and conditions carefully.</p>
+
+            <div style="font-size:0.9rem; line-height:1.7; max-height:55vh; overflow-y:auto; padding-right:0.5rem;">
+                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">1. Registration Confirmation</h3>
+                <p style="margin:0 0 1rem; opacity:0.8;">Registration is confirmed only after full payment of the applicable registration fee.</p>
+
+                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">2. Attendance &amp; Participation</h3>
+                <p style="margin:0 0 0.4rem; opacity:0.8;">Participants are responsible for their own travel, accommodation, and visa arrangements.</p>
+                <p style="margin:0 0 1rem; opacity:0.8;">The conference organizers reserve the right to make changes to the program, speakers, or schedule.</p>
+
+                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">3. Intellectual Property</h3>
+                <p style="margin:0 0 0.4rem; opacity:0.8;">Submitted papers, abstracts, and presentations must be original work.</p>
+                <p style="margin:0 0 1rem; opacity:0.8;">Authors retain copyright but grant ACSEL the right to publish abstracts or papers in conference proceedings.</p>
+
+                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">4. Privacy &amp; Data Protection</h3>
+                <p style="margin:0 0 0.4rem; opacity:0.8;">Personal information collected for registration will only be used for conference administration and communication.</p>
+                <p style="margin:0 0 1rem; opacity:0.8;">All information will be handled in accordance with applicable data protection regulations.</p>
+
+                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">5. Agreement</h3>
+                <p style="margin:0 0 1.5rem; opacity:0.8;">By registering, participants agree to comply with the above terms and conditions.</p>
+            </div>
+
+            <div style="display:flex; gap:0.75rem; justify-content:flex-end; margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid rgba(0,0,0,0.1);">
+                <button type="button" onclick="closeTermsModal(false)"
+                    style="padding:0.6rem 1.25rem; border:1px solid rgba(0,0,0,0.18); border-radius:0.5rem; background:transparent; font:inherit; font-size:0.9rem; cursor:pointer;">Cancel</button>
+                <button type="button" onclick="closeTermsModal(true)" class="btn btn-accent" style="min-width:130px;">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">I Agree</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Focus border highlight
+        document.querySelectorAll('#registrationForm input, #registrationForm select').forEach(el => {
+            el.addEventListener('focus', () => el.style.borderColor = 'var(--accent, #1a73e8)');
+            el.addEventListener('blur', () => el.style.borderColor = 'rgba(0,0,0,0.18)');
+        });
+
+        // Intercept checkbox click to show modal
+        const agreementCheckbox = document.getElementById('agreement');
+        agreementCheckbox.addEventListener('click', function (e) {
+            if (this.checked) {
+                // Prevent checking directly; modal will set it
+                this.checked = false;
+                openTermsModal();
+            }
+        });
+
+        function openTermsModal() {
+            document.getElementById('termsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTermsModal(agreed) {
+            document.getElementById('termsModal').style.display = 'none';
+            document.body.style.overflow = '';
+            if (agreed) {
+                agreementCheckbox.checked = true;
+            }
+        }
+
+        // Close on backdrop click
+        document.getElementById('termsModal').addEventListener('click', function (e) {
+            if (e.target === this) closeTermsModal(false);
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && document.getElementById('termsModal').style.display === 'block') {
+                closeTermsModal(false);
+            }
+        });
+    </script>
+
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-brand">
@@ -111,7 +312,7 @@
                 <a href="travel.html">Travel</a>
                 <a href="sponsorship.html">Sponsorship</a>
                 <a href="submit.html">Submit</a>
-                <a href="register.html">Registration</a>
+                <a href="/Register">Registration</a>
             </div>
         </div>
     </footer>

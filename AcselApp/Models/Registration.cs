@@ -22,9 +22,21 @@ namespace AcselApp.Models
         [MaxLength(200)]
         public string? Institution { get; set; }
 
+        [MaxLength(100)]
+        public string? TitlePosition { get; set; }
+
+        [MaxLength(50)]
+        public string? ParticipationType { get; set; }
+
+        [MaxLength(300)]
+        public string? PaperTitle { get; set; }
+
         [Required]
         [MaxLength(50)]
-        public string TicketType { get; set; } = string.Empty; // Early Bird, Standard, Student
+        public string TicketType { get; set; } = string.Empty;
+
+        [MaxLength(50)]
+        public string? PaymentMethod { get; set; }
 
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
 

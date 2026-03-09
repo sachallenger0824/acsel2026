@@ -27,6 +27,34 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AcselDbContext>();
     db.Database.EnsureCreated();
+
+    // Add new columns if they don't exist (for existing databases)
+    var conn = db.Database.GetDbConnection();
+    conn.Open();
+    using var cmd = conn.CreateCommand();
+    cmd.CommandText = "PRAGMA table_info(Registrations)";
+    var existingColumns = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+    using (var reader = cmd.ExecuteReader())
+    {
+        while (reader.Read())
+            existingColumns.Add(reader.GetString(1));
+    }
+    var newColumns = new Dictionary<string, string>
+    {
+        ["TitlePosition"] = "TEXT",
+        ["ParticipationType"] = "TEXT",
+        ["PaperTitle"] = "TEXT",
+        ["PaymentMethod"] = "TEXT"
+    };
+    foreach (var (col, type) in newColumns)
+    {
+        if (!existingColumns.Contains(col))
+        {
+            using var alter = conn.CreateCommand();
+            alter.CommandText = $"ALTER TABLE Registrations ADD COLUMN {col} {type}";
+            alter.ExecuteNonQuery();
+        }
+    }
 }
 
 // Configure the HTTP request pipeline.
