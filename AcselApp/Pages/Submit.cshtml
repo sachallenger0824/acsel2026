@@ -1,0 +1,405 @@
+@page
+@model AcselApp.Pages.SubmitModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Paper | ACSEL 2026</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=IBM+Plex+Mono&family=Outfit:wght@400;600&family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="~/style.css">
+    <style>
+        /* ── Form Styles ── */
+        .form-section {
+            border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 0.75rem;
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+        }
+        .form-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            opacity: 0.85;
+        }
+        .form-label .required {
+            color: #dc2626;
+            margin-left: 2px;
+        }
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.55rem 0.85rem;
+            font-size: 0.925rem;
+            font-family: inherit;
+            border: 1px solid rgba(0,0,0,0.18);
+            border-radius: 0.5rem;
+            background: #fff;
+            color: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent, #1a73e8);
+            box-shadow: 0 0 0 3px rgba(26,115,232,0.12);
+        }
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .hint-text {
+            font-size: 0.78rem;
+            opacity: 0.55;
+            margin-top: 0.35rem;
+        }
+        .radio-group {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .word-counter {
+            font-size: 0.78rem;
+            opacity: 0.55;
+            margin-top: 0.35rem;
+            text-align: right;
+        }
+        .word-counter.over-limit { color: #dc2626; opacity: 1; font-weight: 600; }
+        .alert-success {
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.3);
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            color: #065f46;
+        }
+        .alert-error {
+            background: rgba(220,38,38,0.08);
+            border: 1px solid rgba(220,38,38,0.25);
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            color: #991b1b;
+        }
+        .field-validation-error {
+            display: block;
+            font-size: 0.78rem;
+            color: #dc2626;
+            margin-top: 0.3rem;
+        }
+        .input-invalid { border-color: #dc2626 !important; }
+    </style>
+</head>
+
+<body>
+    <svg class="noise-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)" opacity="0.05" />
+    </svg>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="~/" class="logo">ACSEL 2026</a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span class="material-symbols-outlined menu-icon">menu</span>
+                <span class="material-symbols-outlined close-icon">close</span>
+            </label>
+            <div class="nav-menu">
+                <a href="~/about.html" class="nav-link">About</a>
+                <a href="~/programme.html" class="nav-link">Programme</a>
+                <a href="~/speakers.html" class="nav-link">Speakers</a>
+                <a href="~/travel.html" class="nav-link">Travel</a>
+                <a href="~/sponsorship.html" class="nav-link">Sponsorship</a>
+                <a href="~/Submit" class="nav-link" style="white-space:nowrap;">Submit Paper</a>
+                <a href="~/Register" class="btn btn-accent nav-cta">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">Register</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero subpage-hero section-dark">
+        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=720&q=80');"></div>
+        <div class="hero-gradient"></div>
+        <div class="container hero-container" style="padding-top: 15vh;">
+            <div class="hero-content">
+                <h1 class="hero-title animate-item">
+                    <span class="hero-serif">Submit Paper</span>
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Submit Paper Section -->
+    <section class="container py-fluid pb-xxl" style="max-width: 860px;">
+        <div class="animate-on-scroll">
+            <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem;">Submit Your Paper for ACSEL 2026!</h2>
+            <p style="opacity: 0.7; margin-bottom: 1.5rem;">ACSEL 2026, with the theme <strong>&lsquo;AI in Accident Prevention&rsquo;</strong>, focuses on how artificial intelligence can enhance accident prevention, autonomous risk management, and the transformation and innovation of laboratory safety education.</p>
+
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Submit Abstract for Oral or Poster Presentation!</h3>
+
+            <!-- Submission Guidelines -->
+            <div style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 2rem;">
+                <h4 style="font-weight: 700; margin: 0 0 0.75rem; font-size: 1rem;">Abstract Submission Guidelines</h4>
+                <p style="margin: 0 0 0.75rem; opacity: 0.8;">Submissions are encouraged in (but not limited to) the following areas:</p>
+                <ul style="margin: 0 0 1.25rem 1.25rem; line-height: 1.8; opacity: 0.8;">
+                    <li>AI-Based Risk Prediction</li>
+                    <li>Intelligent Laboratory Safety Monitoring</li>
+                    <li>AI Early Warning Systems</li>
+                    <li>AI for Safety Education</li>
+                    <li>Human Behavior Analysis in Accident Prevention</li>
+                    <li>AI and Smart Laboratory Systems</li>
+                    <li>AI-Based Accident Analysis</li>
+                    <li>AI for Emergency Response</li>
+                    <li>Laboratory Safety and Health Management</li>
+                    <li>Laboratory Safety and Health Compliance</li>
+                    <li>Laboratory Waste Treatment and Management</li>
+                    <li>Other Laboratory Safety and Health Related Issues</li>
+                </ul>
+                <p style="margin: 0; opacity: 0.8;">Abstract should be <strong>no more than 100 words</strong>. Each author with an accepted abstract will be invited to give an oral or poster presentation.</p>
+                <p style="margin: 0.5rem 0 0; font-size: 0.875rem; opacity: 0.6;">(Based on these submissions we will make a decision as whether or not to accept your contribution and arrange the conference sessions.)</p>
+            </div>
+
+            <!-- Success / Error messages -->
+            @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+            {
+                <div class="alert-success">
+                    <span class="material-symbols-outlined" style="font-size:1.3rem;flex-shrink:0;">check_circle</span>
+                    <div>
+                        <strong>Submission received!</strong><br>
+                        @Model.SuccessMessage
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert-error">
+                    <span class="material-symbols-outlined" style="font-size:1.3rem;flex-shrink:0;">error</span>
+                    <div>@Model.ErrorMessage</div>
+                </div>
+            }
+
+            <!-- Abstract Submission Form -->
+            <form method="post">
+                @Html.AntiForgeryToken()
+
+                <!-- Presentation Preference -->
+                <div class="form-section">
+                    <h4 class="form-section-title">
+                        <span class="material-symbols-outlined" style="font-size:1.1rem;vertical-align:middle;margin-right:0.3rem;">podium</span>
+                        Presentation Preference
+                    </h4>
+                    <div class="form-group">
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" asp-for="Submission.PresentationType" value="Oral"> Oral Presentation
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" asp-for="Submission.PresentationType" value="Poster"> Poster Presentation
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" asp-for="Submission.PresentationType" value="No Preference" checked> No Preference
+                            </label>
+                        </div>
+                        <span asp-validation-for="Submission.PresentationType"></span>
+                    </div>
+                </div>
+
+                <!-- Paper Information -->
+                <div class="form-section">
+                    <h4 class="form-section-title">
+                        <span class="material-symbols-outlined" style="font-size:1.1rem;vertical-align:middle;margin-right:0.3rem;">article</span>
+                        Paper Information
+                    </h4>
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Submission.Title">
+                            Title of the Abstract <span class="required">*</span>
+                        </label>
+                        <input class="form-control" asp-for="Submission.Title" placeholder="Enter the full title of your abstract" />
+                        <span asp-validation-for="Submission.Title" class="field-validation-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Submission.Authors">
+                            Authors <span class="required">*</span>
+                        </label>
+                        <input class="form-control" asp-for="Submission.Authors"
+                               placeholder="e.g. First Author¹, Second Author², Third Author³" />
+                        <p class="hint-text">List all authors in order, using superscript numbers (¹ ² ³) to indicate affiliations.</p>
+                        <span asp-validation-for="Submission.Authors" class="field-validation-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Submission.Affiliations">Author Affiliations</label>
+                        <textarea class="form-control" asp-for="Submission.Affiliations" rows="3"
+                                  placeholder="¹ Department / Institute, University, Country&#10;² Department / Institute, University, Country"></textarea>
+                        <p class="hint-text">One affiliation per line, numbered to match the superscripts in the Authors field.</p>
+                    </div>
+                </div>
+
+                <!-- Corresponding Author -->
+                <div class="form-section">
+                    <h4 class="form-section-title">
+                        <span class="material-symbols-outlined" style="font-size:1.1rem;vertical-align:middle;margin-right:0.3rem;">person</span>
+                        Corresponding Author
+                    </h4>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                        <div class="form-group">
+                            <label class="form-label" asp-for="Submission.CorrespondingAuthor">
+                                Full Name <span class="required">*</span>
+                            </label>
+                            <input class="form-control" asp-for="Submission.CorrespondingAuthor" placeholder="Full name" />
+                            <span asp-validation-for="Submission.CorrespondingAuthor" class="field-validation-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" asp-for="Submission.CorrespondingEmail">
+                                Email Address <span class="required">*</span>
+                            </label>
+                            <input class="form-control" asp-for="Submission.CorrespondingEmail" type="email" placeholder="email@example.com" />
+                            <span asp-validation-for="Submission.CorrespondingEmail" class="field-validation-error"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Abstract Content -->
+                <div class="form-section">
+                    <h4 class="form-section-title">
+                        <span class="material-symbols-outlined" style="font-size:1.1rem;vertical-align:middle;margin-right:0.3rem;">description</span>
+                        Abstract <span class="required" style="font-weight:400;color:#dc2626;">*</span>
+                    </h4>
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Submission.AbstractText">
+                            Abstract Text <span class="required">*</span>
+                        </label>
+                        <textarea class="form-control" asp-for="Submission.AbstractText" rows="8" id="abstractTextarea"
+                                  placeholder="Background: … Method: … Results: … Conclusion: …"
+                                  oninput="updateWordCount(this)"></textarea>
+                        <div class="word-counter" id="wordCounter">0 / 100 words</div>
+                        <p class="hint-text" style="margin-top:0;">
+                            Please structure your abstract with: <strong>Background</strong> · <strong>Method</strong> · <strong>Results</strong> · <strong>Conclusion</strong>. Maximum 100 words.
+                        </p>
+                        <span asp-validation-for="Submission.AbstractText" class="field-validation-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Submission.Keywords">Keywords</label>
+                        <input class="form-control" asp-for="Submission.Keywords"
+                               placeholder="e.g. Laboratory Safety; Artificial Intelligence; Accident Prevention" />
+                        <p class="hint-text">Separate keywords with semicolons (;).</p>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div style="text-align:center; margin-bottom: 2.5rem;">
+                    <button type="submit" class="btn btn-accent" style="min-width:260px;">
+                        <span class="btn-bg"></span>
+                        <span class="btn-text">
+                            <span class="material-symbols-outlined" style="font-size:1.1rem;vertical-align:middle;margin-right:0.4rem;">send</span>
+                            Submit Abstract
+                        </span>
+                    </button>
+                    <p style="margin-top:0.85rem;font-size:0.85rem;opacity:0.6;">
+                        Your submission will be sent to
+                        <a href="mailto:acsel2026@office.pccu.edu.tw" style="color:var(--accent,#1a73e8);">acsel2026@office.pccu.edu.tw</a>
+                        and our team will contact you via the corresponding author's email.
+                    </p>
+                </div>
+            </form>
+
+            <!-- Important Dates -->
+            <div style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem;">
+                <h4 style="font-weight: 700; margin: 0 0 1rem; font-size: 1rem;">Important Dates</h4>
+                <div style="display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1.5rem; font-size: 0.95rem;">
+                    <span class="data-text" style="font-weight: 600; white-space: nowrap;">15 June 2026</span>
+                    <span>Abstract Submission Deadline</span>
+                    <span class="data-text" style="font-weight: 600; white-space: nowrap;">30 June 2026 onwards</span>
+                    <span>Abstract Acceptance Notification</span>
+                    <span class="data-text" style="font-weight: 600; white-space: nowrap;">15 September 2026</span>
+                    <span>Full Presentation Submission Deadline (Oral &amp; Poster)</span>
+                    <span class="data-text" style="font-weight: 600; white-space: nowrap;">19–20 November 2026</span>
+                    <span>Conference</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h2>ACSEL 2026</h2>
+                <p>The 13th Asian Conference on Safety &amp; Education in Laboratory</p>
+                <div class="system-status mt-md">
+                    <span class="material-symbols-outlined status-dot">fiber_manual_record</span>
+                    <span class="status-text data-text">System Operational // Registration Open</span>
+                </div>
+            </div>
+            <div class="footer-nav">
+                <h4>Information</h4>
+                <a href="~/about.html">About</a>
+                <a href="~/programme.html">Programme</a>
+                <a href="~/speakers.html">Speakers</a>
+                <a href="~/travel.html">Travel</a>
+                <a href="~/sponsorship.html">Sponsorship</a>
+                <a href="~/Submit">Submit</a>
+                <a href="~/Register">Registration</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/main.js"></script>
+    <script>
+        function updateWordCount(textarea) {
+            const text = textarea.value.trim();
+            const words = text === '' ? 0 : text.split(/\s+/).length;
+            const counter = document.getElementById('wordCounter');
+            counter.textContent = words + ' / 100 words';
+            counter.classList.toggle('over-limit', words > 100);
+        }
+        // Run on page load in case of validation re-render
+        document.addEventListener('DOMContentLoaded', function () {
+            const ta = document.getElementById('abstractTextarea');
+            if (ta) updateWordCount(ta);
+        });
+    </script>
+</body>
+
+</html>

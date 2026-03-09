@@ -9,6 +9,7 @@ namespace AcselApp.Data
 
         public DbSet<UpdateNewsItem> UpdatesNews { get; set; }
         public DbSet<Registration> Registrations { get; set; }
+        public DbSet<AbstractSubmission> AbstractSubmissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

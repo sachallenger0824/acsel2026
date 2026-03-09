@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=/Submit">
     <title>Submit Paper | ACSEL 2026</title>
+    <script>window.location.replace('/Submit');</script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -91,10 +93,15 @@
 
             <!-- Abstract Format Button -->
             <div style="text-align: center; margin-bottom: 2.5rem;">
-                <button type="button" onclick="openAbstractModal()" class="btn btn-accent" style="min-width: 260px;">
+                <a href="ACSEL_2026_Abstract_Template.docx" download class="btn btn-accent" style="min-width: 260px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none;">
                     <span class="btn-bg"></span>
-                    <span class="btn-text"><span class="material-symbols-outlined" style="font-size: 1.1rem; vertical-align: middle; margin-right: 0.4rem;">description</span>Abstract Format &amp; Submission</span>
-                </button>
+                    <span class="btn-text"><span class="material-symbols-outlined" style="font-size: 1.1rem; vertical-align: middle; margin-right: 0.4rem;">download</span>Download Abstract Template (.docx)</span>
+                </a>
+                <p style="margin-top: 0.85rem; font-size: 0.9rem; opacity: 0.75;">
+                    <span class="material-symbols-outlined" style="font-size:1rem; vertical-align:middle; margin-right:0.3rem;">mail</span>
+                    Please fill in the template and send it as an <strong>email attachment</strong> to
+                    <a href="mailto:acsel2026.tw@gmail.com" style="font-weight:600; color:var(--accent, #1a73e8);">acsel2026.tw@gmail.com</a>
+                </p>
             </div>
 
             <!-- Important Dates -->
@@ -114,60 +121,7 @@
         </div>
     </section>
 
-    <!-- Abstract Format Modal -->
-    <div id="abstractModal" role="dialog" aria-modal="true" aria-labelledby="abstractModalTitle"
-        style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.55); overflow-y:auto; padding: 2rem 1rem;">
-        <div style="background:#fff; max-width:680px; margin:auto; border-radius:1rem; padding:2rem 2rem 1.5rem; position:relative; box-shadow:0 24px 48px rgba(0,0,0,0.18);">
-            <button type="button" onclick="closeAbstractModal()" aria-label="Close"
-                style="position:absolute; top:1rem; right:1rem; background:none; border:none; cursor:pointer; font-size:1.4rem; line-height:1; opacity:0.5;">&#x2715;</button>
 
-            <h2 id="abstractModalTitle" style="font-size:1.35rem; font-weight:700; margin:0 0 0.25rem;">Abstract Format &amp; Email Submission</h2>
-            <p style="font-size:0.875rem; opacity:0.6; margin:0 0 1.5rem;">Please follow the format below and send your abstract via email.</p>
-
-            <!-- Abstract Template -->
-            <div style="background:rgba(0,0,0,0.03); border:1px solid rgba(0,0,0,0.1); border-radius:0.75rem; padding:1.5rem; font-size:0.9rem; line-height:1.8; margin-bottom:1.5rem; font-family:'IBM Plex Mono', monospace;">
-                <p style="margin:0 0 0.75rem; text-align:center; font-weight:700; font-size:1rem;">ACSEL 2026</p>
-                <p style="margin:0 0 0.25rem; text-align:center; font-weight:700; font-style:italic;">（Title of the Abstract）</p>
-                <p style="margin:0 0 0.25rem; text-align:center;">First Author<sup>1</sup>, Second Author<sup>2</sup>, Third Author<sup>3</sup></p>
-                <p style="margin:0; text-align:center; font-size:0.8rem; opacity:0.7;"><sup>1</sup> Department / Institute, University, Country</p>
-                <p style="margin:0; text-align:center; font-size:0.8rem; opacity:0.7;"><sup>2</sup> Department / Institute, University, Country</p>
-                <p style="margin:0 0 0.75rem; text-align:center; font-size:0.8rem; opacity:0.7;">Corresponding author: email@example.com</p>
-                <hr style="border:none; border-top:1px solid rgba(0,0,0,0.1); margin:0.75rem 0;">
-                <p style="margin:0 0 0.5rem; font-weight:700;">Abstract</p>
-                <p style="margin:0 0 0.75rem; opacity:0.8;"><strong>Background:</strong> Briefly describe the laboratory safety problem or research background. <strong>Method:</strong> Explain the research method, experiment design, or AI technology used. <strong>Results:</strong> Summarize the key findings or expected outcomes. <strong>Conclusion:</strong> Explain the significance of this study for laboratory safety and accident prevention. <em>(Total length about 100 words.)</em></p>
-                <p style="margin:0; opacity:0.8;"><strong>Keywords:</strong> Laboratory Safety; Artificial Intelligence; Accident Prevention; Risk Management</p>
-            </div>
-
-            <div style="border:1px dashed rgba(0,0,0,0.2); border-radius:0.5rem; padding:1rem; margin-bottom:1.5rem; font-size:0.9rem;">
-                <p style="margin:0 0 0.5rem; font-weight:700;"><span class="material-symbols-outlined" style="font-size:1rem; vertical-align:middle; margin-right:0.3rem;">mail</span>Send your abstract to:</p>
-                <p style="margin:0; font-weight:600; color:var(--accent, #1a73e8);">acsel2026.tw@gmail.com</p>
-            </div>
-
-            <div style="display:flex; justify-content:flex-end;">
-                <button type="button" onclick="closeAbstractModal()"
-                    style="padding:0.6rem 1.5rem; border:1px solid rgba(0,0,0,0.18); border-radius:0.5rem; background:transparent; font:inherit; font-size:0.9rem; cursor:pointer;">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function openAbstractModal() {
-            document.getElementById('abstractModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeAbstractModal() {
-            document.getElementById('abstractModal').style.display = 'none';
-            document.body.style.overflow = '';
-        }
-        document.getElementById('abstractModal').addEventListener('click', function(e) {
-            if (e.target === this) closeAbstractModal();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && document.getElementById('abstractModal').style.display === 'block') {
-                closeAbstractModal();
-            }
-        });
-    </script>
 
     <footer class="footer">
         <div class="container footer-grid">

@@ -55,6 +55,24 @@ using (var scope = app.Services.CreateScope())
             alter.ExecuteNonQuery();
         }
     }
+
+    // Ensure AbstractSubmissions table exists (for databases created before this feature)
+    using var createAbstracts = conn.CreateCommand();
+    createAbstracts.CommandText = @"
+        CREATE TABLE IF NOT EXISTS AbstractSubmissions (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            PresentationType TEXT NOT NULL DEFAULT 'No Preference',
+            Title TEXT NOT NULL,
+            Authors TEXT NOT NULL,
+            Affiliations TEXT,
+            CorrespondingAuthor TEXT NOT NULL,
+            CorrespondingEmail TEXT NOT NULL,
+            AbstractText TEXT NOT NULL,
+            Keywords TEXT,
+            SubmittedAt TEXT NOT NULL DEFAULT (datetime('now')),
+            Status TEXT NOT NULL DEFAULT 'Pending'
+        )";
+    createAbstracts.ExecuteNonQuery();
 }
 
 // Configure the HTTP request pipeline.
