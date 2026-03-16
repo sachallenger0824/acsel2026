@@ -31,6 +31,12 @@ namespace AcselApp.Models
         [MaxLength(300)]
         public string? PaperTitle { get; set; }
 
+        [MaxLength(50)]
+        public string? SightseeingTour { get; set; }
+
+        [MaxLength(50)]
+        public string? TechnicalTour { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string TicketType { get; set; } = string.Empty;
