@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHttpClient();
 
 // Add session support for admin login
 builder.Services.AddDistributedMemoryCache();
@@ -45,6 +46,7 @@ using (var scope = app.Services.CreateScope())
         ["ParticipationType"] = "TEXT",
         ["PaperTitle"] = "TEXT",
         ["PaymentMethod"] = "TEXT",
+        ["PaymentLink"] = "TEXT",
         ["SightseeingTour"] = "TEXT",
         ["TechnicalTour"] = "TEXT"
     };

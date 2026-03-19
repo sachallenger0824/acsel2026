@@ -390,11 +390,17 @@
                                                 <span class="status-dot"></span>待付款
                                             </span>
                                         }
+                                        @if (!string.IsNullOrEmpty(reg.PaymentLink))
+                                        {
+                                            <div style="margin-top: 4px;">
+                                                <a href="@reg.PaymentLink" target="_blank" style="color: var(--accent-light); font-size: 0.75rem; text-decoration: underline;">查看付款連結</a>
+                                            </div>
+                                        }
                                     </td>
                                     <td><span class="cell-date">@reg.RegistrationDate.ToString("yyyy-MM-dd")</span></td>
                                     <td>
                                         <div class="action-btns">
-                                            <button class="btn btn-outline btn-sm" onclick='openDetail(@System.Text.Json.JsonSerializer.Serialize(new { reg.Id, reg.FullName, reg.Email, reg.Phone, reg.Institution, reg.TitlePosition, reg.ParticipationType, reg.PaperTitle, reg.TicketType, reg.PaymentMethod, Date = reg.RegistrationDate.ToString("yyyy-MM-dd HH:mm"), reg.PaymentStatus, reg.Comments }))'>
+                                            <button class="btn btn-outline btn-sm" onclick='openDetail(@System.Text.Json.JsonSerializer.Serialize(new { reg.Id, reg.FullName, reg.Email, reg.Phone, reg.Institution, reg.TitlePosition, reg.ParticipationType, reg.PaperTitle, reg.TicketType, reg.PaymentMethod, Date = reg.RegistrationDate.ToString("yyyy-MM-dd HH:mm"), reg.PaymentStatus, reg.PaymentLink, reg.Comments }))'>
                                                 <span class="material-symbols-outlined">visibility</span>
                                                 詳情
                                             </button>
@@ -474,13 +480,21 @@
                 { label: '付款方式', value: data.PaymentMethod || '—' },
                 { label: '報名日期', value: data.Date },
                 { label: '付款狀態', value: data.PaymentStatus },
+                { label: '付款連結', value: data.PaymentLink || '—', isLink: true },
                 { label: '備註', value: data.Comments || '—' }
             ];
             var html = '';
             for (var i = 0; i < fields.length; i++) {
+                var val = fields[i].value;
+                if (fields[i].isLink && val !== '—') {
+                    val = '<a href="' + escapeHtml(String(val)) + '" target="_blank" style="color: var(--accent); text-decoration: underline;">' + escapeHtml(String(val)) + '</a>';
+                } else {
+                    val = escapeHtml(String(val));
+                }
+                
                 html += '<div class="detail-row">' +
                     '<div class="detail-label">' + fields[i].label + '</div>' +
-                    '<div class="detail-value">' + escapeHtml(String(fields[i].value)) + '</div>' +
+                    '<div class="detail-value">' + val + '</div>' +
                     '</div>';
             }
             document.getElementById('detailContent').innerHTML = html;

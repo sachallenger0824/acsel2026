@@ -49,6 +49,8 @@ namespace AcselApp.Models
         [MaxLength(50)]
         public string PaymentStatus { get; set; } = "Pending";
 
+        public string? PaymentLink { get; set; }
+
         public string? Comments { get; set; }
     }
 }
