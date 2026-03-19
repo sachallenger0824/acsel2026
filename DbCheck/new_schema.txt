@@ -1,0 +1,40 @@
+CREATE TABLE "Registrations" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Registrations" PRIMARY KEY AUTOINCREMENT,
+    "FullName" TEXT NOT NULL,
+    "Email" TEXT NOT NULL,
+    "Phone" TEXT NULL,
+    "Institution" TEXT NULL,
+    "TicketType" TEXT NOT NULL,
+    "RegistrationDate" TEXT NOT NULL,
+    "PaymentStatus" TEXT NOT NULL,
+    "Comments" TEXT NULL
+, TitlePosition TEXT, ParticipationType TEXT, PaperTitle TEXT, PaymentMethod TEXT, "SightseeingTour" TEXT NULL, "TechnicalTour" TEXT NULL)
+CREATE TABLE sqlite_sequence(name,seq)
+CREATE TABLE "UpdatesNews" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_UpdatesNews" PRIMARY KEY AUTOINCREMENT,
+    "Title" TEXT NOT NULL,
+    "Content" TEXT NOT NULL,
+    "PublishDate" TEXT NOT NULL,
+    "IsActive" INTEGER NOT NULL
+)
+CREATE TABLE "__EFMigrationsLock" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK___EFMigrationsLock" PRIMARY KEY,
+    "Timestamp" TEXT NOT NULL
+)
+CREATE TABLE "__EFMigrationsHistory" (
+    "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+    "ProductVersion" TEXT NOT NULL
+)
+CREATE TABLE AbstractSubmissions (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            PresentationType TEXT NOT NULL DEFAULT 'No Preference',
+            Title TEXT NOT NULL,
+            Authors TEXT NOT NULL,
+            Affiliations TEXT,
+            CorrespondingAuthor TEXT NOT NULL,
+            CorrespondingEmail TEXT NOT NULL,
+            AbstractText TEXT NOT NULL,
+            Keywords TEXT,
+            SubmittedAt TEXT NOT NULL DEFAULT (datetime('now')),
+            Status TEXT NOT NULL DEFAULT 'Pending'
+        )

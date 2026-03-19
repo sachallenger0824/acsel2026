@@ -44,7 +44,9 @@ using (var scope = app.Services.CreateScope())
         ["TitlePosition"] = "TEXT",
         ["ParticipationType"] = "TEXT",
         ["PaperTitle"] = "TEXT",
-        ["PaymentMethod"] = "TEXT"
+        ["PaymentMethod"] = "TEXT",
+        ["SightseeingTour"] = "TEXT",
+        ["TechnicalTour"] = "TEXT"
     };
     foreach (var (col, type) in newColumns)
     {
