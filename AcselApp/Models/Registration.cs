@@ -26,12 +26,6 @@ namespace AcselApp.Models
         public string? TitlePosition { get; set; }
 
         [MaxLength(50)]
-        public string? ParticipationType { get; set; }
-
-        [MaxLength(300)]
-        public string? PaperTitle { get; set; }
-
-        [MaxLength(50)]
         public string? SightseeingTour { get; set; }
 
         [MaxLength(50)]

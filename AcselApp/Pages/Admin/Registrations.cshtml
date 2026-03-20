@@ -365,7 +365,7 @@
                         <tbody id="regTableBody">
                             @foreach (var reg in Model.Registrations)
                             {
-                                <tr data-search="@reg.FullName @reg.Email @reg.Institution @reg.TitlePosition @reg.ParticipationType @reg.TicketType">
+                                <tr data-search="@reg.FullName @reg.Email @reg.Institution @reg.TitlePosition @reg.TicketType">
                                     <td><span class="id-badge">@reg.Id</span></td>
                                     <td>
                                         <div class="cell-primary">@reg.FullName</div>
@@ -400,7 +400,7 @@
                                     <td><span class="cell-date">@reg.RegistrationDate.ToString("yyyy-MM-dd")</span></td>
                                     <td>
                                         <div class="action-btns">
-                                            <button class="btn btn-outline btn-sm" onclick='openDetail(@System.Text.Json.JsonSerializer.Serialize(new { reg.Id, reg.FullName, reg.Email, reg.Phone, reg.Institution, reg.TitlePosition, reg.ParticipationType, reg.PaperTitle, reg.TicketType, reg.PaymentMethod, Date = reg.RegistrationDate.ToString("yyyy-MM-dd HH:mm"), reg.PaymentStatus, reg.PaymentLink, reg.Comments }))'>
+                                            <button class="btn btn-outline btn-sm" onclick='openDetail(@System.Text.Json.JsonSerializer.Serialize(new { reg.Id, reg.FullName, reg.Email, reg.Phone, reg.Institution, reg.TitlePosition, reg.TicketType, reg.PaymentMethod, Date = reg.RegistrationDate.ToString("yyyy-MM-dd HH:mm"), reg.PaymentStatus, reg.PaymentLink, reg.Comments }))'>
                                                 <span class="material-symbols-outlined">visibility</span>
                                                 詳情
                                             </button>
@@ -474,8 +474,6 @@
                 { label: '電話', value: data.Phone || '—' },
                 { label: '機構', value: data.Institution || '—' },
                 { label: '職稱', value: data.TitlePosition || '—' },
-                { label: '參與類型', value: data.ParticipationType || '—' },
-                { label: '論文題目', value: data.PaperTitle || '—' },
                 { label: '費用類型', value: data.TicketType },
                 { label: '付款方式', value: data.PaymentMethod || '—' },
                 { label: '報名日期', value: data.Date },

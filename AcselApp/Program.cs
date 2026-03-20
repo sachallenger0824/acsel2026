@@ -43,8 +43,6 @@ using (var scope = app.Services.CreateScope())
     var newColumns = new Dictionary<string, string>
     {
         ["TitlePosition"] = "TEXT",
-        ["ParticipationType"] = "TEXT",
-        ["PaperTitle"] = "TEXT",
         ["PaymentMethod"] = "TEXT",
         ["PaymentLink"] = "TEXT",
         ["SightseeingTour"] = "TEXT",
@@ -57,6 +55,17 @@ using (var scope = app.Services.CreateScope())
             using var alter = conn.CreateCommand();
             alter.CommandText = $"ALTER TABLE Registrations ADD COLUMN {col} {type}";
             alter.ExecuteNonQuery();
+        }
+    }
+
+    var deprecatedColumns = new[] { "ParticipationType", "PaperTitle" };
+    foreach (var col in deprecatedColumns)
+    {
+        if (existingColumns.Contains(col))
+        {
+            using var drop = conn.CreateCommand();
+            drop.CommandText = $"ALTER TABLE Registrations DROP COLUMN {col}";
+            drop.ExecuteNonQuery();
         }
     }
 
