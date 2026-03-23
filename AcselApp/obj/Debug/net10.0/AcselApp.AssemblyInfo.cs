@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AcselApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d1de8396cb0943de09780c8263b910b8a5c90bdf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+259a42e69939bdc7eb0122f9d9455807bee5d19c")]
 [assembly: System.Reflection.AssemblyProductAttribute("AcselApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AcselApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
