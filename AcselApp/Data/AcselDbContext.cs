@@ -15,6 +15,13 @@ namespace AcselApp.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Override DataAnnotations so EF Core still reads these columns as nullable from the DB
+            modelBuilder.Entity<Registration>().Property(r => r.Institution).IsRequired(false);
+            modelBuilder.Entity<Registration>().Property(r => r.TitlePosition).IsRequired(false);
+            modelBuilder.Entity<Registration>().Property(r => r.SightseeingTour).IsRequired(false);
+            modelBuilder.Entity<Registration>().Property(r => r.TechnicalTour).IsRequired(false);
+            modelBuilder.Entity<Registration>().Property(r => r.PaymentMethod).IsRequired(false);
+
             // Seed initial data for UpdatesNews
             modelBuilder.Entity<UpdateNewsItem>().HasData(
                 new UpdateNewsItem
