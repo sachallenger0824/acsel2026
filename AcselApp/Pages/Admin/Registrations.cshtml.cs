@@ -71,7 +71,7 @@ namespace AcselApp.Pages.Admin
                 .ToListAsync();
 
             var sb = new StringBuilder();
-            sb.AppendLine("Id,FullName,Email,Phone,Institution,TitlePosition,TicketType,PaymentMethod,RegistrationDate,PaymentStatus,Comments");
+            sb.AppendLine("Id,FullName,Email,Phone,Institution,TitlePosition,ParticipationType,PaperTitle,TicketType,PaymentMethod,RegistrationDate,PaymentStatus,Comments");
 
             foreach (var r in registrations)
             {
@@ -131,7 +131,7 @@ namespace AcselApp.Pages.Admin
             var ws = workbook.Worksheets.Add("報名資料");
 
             // Header row
-            string[] headers = { "編號", "姓名", "Email", "電話", "機構", "職稱", "費用類型", "付款方式", "付款狀態", "報名日期", "備註" };
+            string[] headers = { "編號", "姓名", "Email", "電話", "機構", "職稱", "參與類型", "論文題目", "費用類型", "付款方式", "付款狀態", "報名日期", "備註" };
             for (int i = 0; i < headers.Length; i++)
             {
                 var cell = ws.Cell(1, i + 1);
@@ -166,7 +166,7 @@ namespace AcselApp.Pages.Admin
                 }
 
                 // Color payment status cell
-                var statusCell = ws.Cell(row, 9);
+                var statusCell = ws.Cell(row, 11);
                 if (r.PaymentStatus == "Paid")
                 {
                     statusCell.Style.Fill.BackgroundColor = ClosedXML.Excel.XLColor.FromHtml("#D1FAE5");

@@ -400,7 +400,7 @@
                                     <td><span class="cell-date">@reg.RegistrationDate.ToString("yyyy-MM-dd")</span></td>
                                     <td>
                                         <div class="action-btns">
-                                            <button class="btn btn-outline btn-sm" onclick='openDetail(@System.Text.Json.JsonSerializer.Serialize(new { reg.Id, reg.FullName, reg.Email, reg.Phone, reg.Institution, reg.TitlePosition, reg.TicketType, reg.PaymentMethod, Date = reg.RegistrationDate.ToString("yyyy-MM-dd HH:mm"), reg.PaymentStatus, reg.PaymentLink, reg.Comments }))'>
+                                            <button class="btn btn-outline btn-sm" onclick='openDetail(@System.Text.Json.JsonSerializer.Serialize(new { reg.Id, reg.FullName, reg.Email, reg.Phone, reg.Institution, reg.TitlePosition, reg.SightseeingTour, reg.TechnicalTour, reg.TicketType, reg.PaymentMethod, Date = reg.RegistrationDate.ToString("yyyy-MM-dd HH:mm"), reg.PaymentStatus, reg.PaymentLink, reg.Comments }))'>
                                                 <span class="material-symbols-outlined">visibility</span>
                                                 詳情
                                             </button>
@@ -474,6 +474,8 @@
                 { label: '電話', value: data.Phone || '—' },
                 { label: '機構', value: data.Institution || '—' },
                 { label: '職稱', value: data.TitlePosition || '—' },
+                { label: '觀光行程', value: data.SightseeingTour || '—' },
+                { label: '技術參訪', value: data.TechnicalTour || '—' },
                 { label: '費用類型', value: data.TicketType },
                 { label: '付款方式', value: data.PaymentMethod || '—' },
                 { label: '報名日期', value: data.Date },
@@ -483,16 +485,9 @@
             ];
             var html = '';
             for (var i = 0; i < fields.length; i++) {
-                var val = fields[i].value;
-                if (fields[i].isLink && val !== '—') {
-                    val = '<a href="' + escapeHtml(String(val)) + '" target="_blank" style="color: var(--accent); text-decoration: underline;">' + escapeHtml(String(val)) + '</a>';
-                } else {
-                    val = escapeHtml(String(val));
-                }
-                
                 html += '<div class="detail-row">' +
                     '<div class="detail-label">' + fields[i].label + '</div>' +
-                    '<div class="detail-value">' + val + '</div>' +
+                    '<div class="detail-value">' + escapeHtml(String(fields[i].value)) + '</div>' +
                     '</div>';
             }
             document.getElementById('detailContent').innerHTML = html;

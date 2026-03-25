@@ -15,6 +15,12 @@ namespace AcselApp.Pages
         [BindProperty]
         public AbstractSubmission Submission { get; set; } = new();
 
+        [BindProperty]
+        public string ExpectedCaptcha { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string? CaptchaInput { get; set; }
+
         public string? SuccessMessage { get; set; }
         public string? ErrorMessage { get; set; }
 
@@ -25,12 +31,70 @@ namespace AcselApp.Pages
             _logger = logger;
         }
 
-        public void OnGet() { }
+        private void GenerateCaptcha()
+        {
+            var random = new Random();
+            int captchaCode = random.Next(1000, 10000);
+            
+            // Encode the answer so it's not plain text in the HTML source
+            ExpectedCaptcha = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(captchaCode.ToString()));
+
+            // Generate an SVG image
+            string svg = $@"<svg xmlns='http://www.w3.org/2000/svg' width='120' height='40'>
+                <rect width='100%' height='100%' fill='#eaeaea' rx='4' ry='4' />";
+
+            // Add background noise lines
+            for (int i = 0; i < 6; i++)
+            {
+                svg += $"<line x1='{random.Next(0, 120)}' y1='{random.Next(0, 40)}' x2='{random.Next(0, 120)}' y2='{random.Next(0, 40)}' stroke='#{random.Next(0x888888, 0xCCCCCC):X6}' stroke-width='2' />";
+            }
+
+            // Draw letters with slight random displacement and rotation
+            string codeStr = captchaCode.ToString();
+            for (int i = 0; i < codeStr.Length; i++)
+            {
+                int x = 15 + (i * 22) + random.Next(-2, 3);
+                int y = 28 + random.Next(-3, 3);
+                int rot = random.Next(-20, 20);
+                svg += $"<text x='{x}' y='{y}' font-family='monospace' font-size='26' font-weight='800' fill='#333' transform='rotate({rot} {x} {y})'>{codeStr[i]}</text>";
+            }
+            svg += "</svg>";
+
+            string base64Svg = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(svg));
+            ViewData["CaptchaImage"] = $"data:image/svg+xml;base64,{base64Svg}";
+        }
+
+        public void OnGet() 
+        { 
+            GenerateCaptcha();
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
+            {
+                ErrorMessage = "Some fields are missing or incorrect. Please review your entries and try again.";
+                GenerateCaptcha();
                 return Page();
+            }
+
+            string decodedExpected = string.Empty;
+            try
+            {
+                if (!string.IsNullOrEmpty(ExpectedCaptcha))
+                {
+                    decodedExpected = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ExpectedCaptcha));
+                }
+            }
+            catch { }
+
+            if (string.IsNullOrWhiteSpace(CaptchaInput) || CaptchaInput.Trim() != decodedExpected)
+            {
+                ModelState.AddModelError("CaptchaInput", "Image verification failed. Please try again.");
+                ErrorMessage = "Image verification failed. Please try again.";
+                GenerateCaptcha();
+                return Page();
+            }
 
             Submission.SubmittedAt = DateTime.Now;
             Submission.Status = "Pending";
@@ -45,6 +109,8 @@ namespace AcselApp.Pages
                 var fromAddr = _config["Smtp:From"] ?? "acsel2026@ulive.pccu.edu.tw";
                 //測試用改信箱
                 var toAddr = _config["Smtp:To"] ?? "acsel2026@office.pccu.edu.tw";
+
+                _logger.LogInformation("Attempting to send abstract submission email to {ToAddr} via {SmtpHost}:{SmtpPort}...", toAddr, smtpHost, smtpPort);
    
                 using var mail = new MailMessage();
                 mail.From = new MailAddress(fromAddr, "ACSEL 2026 Abstract System");
@@ -59,15 +125,18 @@ namespace AcselApp.Pages
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.EnableSsl = false;
                 await smtp.SendMailAsync(mail);
+
+                _logger.LogInformation("Abstract submission email sent successfully for ID {Id}.", Submission.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to send abstract submission notification email (ID={Id})", Submission.Id);
+                _logger.LogError(ex, "Failed to send abstract submission notification email (ID={Id}). Exception Message: {Message}", Submission.Id, ex.Message);
             }
 
             SuccessMessage = "Your abstract has been submitted successfully! We will contact you at the provided email address.";
             Submission = new AbstractSubmission();
             ModelState.Clear();
+            GenerateCaptcha();
             return Page();
         }
 

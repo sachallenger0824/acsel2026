@@ -340,6 +340,20 @@
                     </div>
                 </div>
 
+                <!-- Human Verification -->
+                <div class="form-section" style="background: var(--surface-alt, #fafafa);">
+                    <div class="form-group">
+                        <label for="CaptchaInput" class="form-label">Image Verification <span class="required">*</span></label>
+                        <p class="hint-text" style="margin-bottom: 0.5rem;">Please enter the 4-digit number shown in the image.</p>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <img src="@ViewData["CaptchaImage"]" alt="Captcha Image" style="border-radius: 0.25rem; border: 1px solid #ccc; height: 40px;" />
+                            <input type="text" id="CaptchaInput" asp-for="CaptchaInput" required autocomplete="off" maxlength="4" placeholder="Code" class="form-control" style="max-width: 100px;" />
+                            <input type="hidden" name="ExpectedCaptcha" value="@Model.ExpectedCaptcha" />
+                        </div>
+                        <span asp-validation-for="CaptchaInput" class="field-validation-error"></span>
+                    </div>
+                </div>
+
                 <!-- Submit Button -->
                 <div style="text-align:center; margin-bottom: 2.5rem;">
                     <button type="submit" class="btn btn-accent" style="min-width:260px;">
@@ -412,6 +426,7 @@
             if (ta) updateWordCount(ta);
         });
     </script>
+    @await Html.PartialAsync("Shared/_ValidationScriptsPartial")
 </body>
 
 </html>

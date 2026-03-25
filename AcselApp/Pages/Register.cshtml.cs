@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Net.Http;
+using System.Net.Mail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AcselApp.Data;
@@ -12,6 +13,7 @@ namespace AcselApp.Pages
         private readonly AcselDbContext _db;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _config;
 
         [BindProperty]
         public Registration Registration { get; set; } = new();
@@ -26,11 +28,12 @@ namespace AcselApp.Pages
 
         public string? ErrorMessage { get; set; }
 
-        public RegisterModel(AcselDbContext db, ILogger<RegisterModel> logger, IHttpClientFactory httpClientFactory)
+        public RegisterModel(AcselDbContext db, ILogger<RegisterModel> logger, IHttpClientFactory httpClientFactory, IConfiguration config)
         {
             _db = db;
             _logger = logger;
             _httpClientFactory = httpClientFactory;
+            _config = config;
         }
 
         private void GenerateCaptcha()
@@ -161,6 +164,54 @@ namespace AcselApp.Pages
             _logger.LogInformation("New registration saved: {Name}, {Email}, {TicketType}",
                 Registration.FullName, Registration.Email, Registration.TicketType);
 
+            try
+            {
+                var smtpHost = _config["Smtp:Host"] ?? "mta.pccu.edu.tw";
+                var smtpPort = int.Parse(_config["Smtp:Port"] ?? "25");
+                var fromAddr = _config["Smtp:From"] ?? "acsel2026@ulive.pccu.edu.tw";
+                var toAddr = _config["Smtp:To"] ?? "acsel2026@office.pccu.edu.tw";
+
+                _logger.LogInformation("Attempting to send registration email notification to {ToAddr} via {SmtpHost}:{SmtpPort}...", toAddr, smtpHost, smtpPort);
+
+                using var mail = new MailMessage();
+                mail.From = new MailAddress(fromAddr, "ACSEL 2026 Registration");
+                mail.To.Add(toAddr);
+                mail.Subject = $"[ACSEL 2026] New Registration – {Registration.FullName}";
+                mail.IsBodyHtml = true;
+                mail.Body = $@"
+<html>
+<body style='font-family:""Helvetica Neue"",Arial,sans-serif;max-width:720px;margin:0 auto;color:#1a1a2e;'>
+  <div style='background:#1a1a2e;padding:1.5rem 2rem;border-radius:8px 8px 0 0;'>
+    <h1 style='color:#fff;font-size:1.3rem;margin:0;'>ACSEL 2026 — New Registration</h1>
+  </div>
+  <div style='background:#f8f9fc;padding:2rem;border-radius:0 0 8px 8px;border:1px solid #e0e0e0;'>
+    <p>A new registration has been received:</p>
+    <ul>
+      <li><strong>Name:</strong> {System.Net.WebUtility.HtmlEncode(Registration.FullName)}</li>
+      <li><strong>Email:</strong> {System.Net.WebUtility.HtmlEncode(Registration.Email)}</li>
+      <li><strong>Institution:</strong> {System.Net.WebUtility.HtmlEncode(Registration.Institution)}</li>
+      <li><strong>Ticket Type:</strong> {System.Net.WebUtility.HtmlEncode(Registration.TicketType)}</li>
+      <li><strong>Sightseeing Tour:</strong> {System.Net.WebUtility.HtmlEncode(Registration.SightseeingTour)}</li>
+      <li><strong>Technical Tour:</strong> {System.Net.WebUtility.HtmlEncode(Registration.TechnicalTour)}</li>
+    </ul>
+  </div>
+</body>
+</html>";
+                mail.BodyEncoding = System.Text.Encoding.UTF8;
+                mail.SubjectEncoding = System.Text.Encoding.UTF8;
+
+                using var smtp = new SmtpClient(smtpHost, smtpPort);
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.EnableSsl = false;
+                await smtp.SendMailAsync(mail);
+                
+                _logger.LogInformation("Registration email notification sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to send registration email notification (ID={Id}). Exception Message: {Message}", Registration.Id, ex.Message);
+            }
+
             if (!string.IsNullOrEmpty(Registration.PaymentLink) && Registration.PaymentLink.StartsWith("http"))
             {
                 return Redirect(Registration.PaymentLink);
@@ -171,6 +222,7 @@ namespace AcselApp.Pages
             // Clear form
             Registration = new Registration();
             ModelState.Clear();
+            GenerateCaptcha();
 
             return Page();
         }
