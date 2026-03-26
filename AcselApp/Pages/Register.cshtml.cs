@@ -185,15 +185,22 @@ namespace AcselApp.Pages
     <h1 style='color:#fff;font-size:1.3rem;margin:0;'>ACSEL 2026 — New Registration</h1>
   </div>
   <div style='background:#f8f9fc;padding:2rem;border-radius:0 0 8px 8px;border:1px solid #e0e0e0;'>
-    <p>A new registration has been received:</p>
-    <ul>
-      <li><strong>Name:</strong> {System.Net.WebUtility.HtmlEncode(Registration.FullName)}</li>
-      <li><strong>Email:</strong> {System.Net.WebUtility.HtmlEncode(Registration.Email)}</li>
-      <li><strong>Institution:</strong> {System.Net.WebUtility.HtmlEncode(Registration.Institution)}</li>
-      <li><strong>Ticket Type:</strong> {System.Net.WebUtility.HtmlEncode(Registration.TicketType)}</li>
-      <li><strong>Sightseeing Tour:</strong> {System.Net.WebUtility.HtmlEncode(Registration.SightseeingTour)}</li>
-      <li><strong>Technical Tour:</strong> {System.Net.WebUtility.HtmlEncode(Registration.TechnicalTour)}</li>
-    </ul>
+    <p style='margin-top:0;margin-bottom:1.5rem;font-size:1rem;'>A new registration has been received:</p>
+    <table style='width:100%;border-collapse:collapse;font-size:0.93rem;'>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;width:35%;border-bottom:1px solid #d0d4e8;'>Full Name</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.FullName)}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Email</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'><a href='mailto:{System.Net.WebUtility.HtmlEncode(Registration.Email)}'>{System.Net.WebUtility.HtmlEncode(Registration.Email)}</a></td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Phone</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.Phone ?? "—")}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Institution</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.Institution ?? "—")}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Title / Position</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.TitlePosition ?? "—")}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Ticket Type</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.TicketType)}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Sightseeing Tour</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.SightseeingTour ?? "—")}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Technical Tour</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.TechnicalTour ?? "—")}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Payment Method</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.PaymentMethod ?? "—")}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Payment Status</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.PaymentStatus ?? "—")}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Payment Link</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;word-break:break-all;'>{System.Net.WebUtility.HtmlEncode(Registration.PaymentLink ?? "—")}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Registration Date</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{Registration.RegistrationDate:yyyy-MM-dd HH:mm:ss}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;'>Comments</td><td style='padding:8px 12px;white-space:pre-wrap;'>{System.Net.WebUtility.HtmlEncode(Registration.Comments ?? "—")}</td></tr>
+    </table>
   </div>
 </body>
 </html>";
