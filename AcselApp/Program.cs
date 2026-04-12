@@ -46,7 +46,9 @@ using (var scope = app.Services.CreateScope())
         ["PaymentMethod"] = "TEXT",
         ["PaymentLink"] = "TEXT",
         ["SightseeingTour"] = "TEXT",
-        ["TechnicalTour"] = "TEXT"
+        ["TechnicalTour"] = "TEXT",
+        ["Comments"] = "TEXT",
+        ["ParticipantType"] = "TEXT NOT NULL DEFAULT 'International'"
     };
     foreach (var (col, type) in newColumns)
     {
