@@ -43,6 +43,9 @@ namespace AcselApp.Models
         [MaxLength(50)]
         public string? PaymentMethod { get; set; }
 
+        [MaxLength(20)]
+        public string ParticipantType { get; set; } = "International"; // "Domestic" or "International"
+
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
 
         [MaxLength(50)]

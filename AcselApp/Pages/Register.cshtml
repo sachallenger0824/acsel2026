@@ -1,7 +1,9 @@
-@page
+@page "{type?}"
 @model AcselApp.Pages.RegisterModel
 @{
     Layout = null;
+    var pType = Model.ParticipantType; // "International" or "Domestic"
+    var isDomestic = pType == "Domestic";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -38,10 +40,16 @@
                 <a href="~/travel.html" class="nav-link">Travel</a>
                 <a href="~/sponsorship.html" class="nav-link">Sponsorship</a>
                 <a href="~/submit.html" class="nav-link" style="white-space:nowrap;">Submit Paper</a>
-                <a href="~/Register" class="btn btn-accent nav-cta">
-                    <span class="btn-bg"></span>
-                    <span class="btn-text">Register</span>
-                </a>
+                <div class="nav-register-wrapper">
+                    <a href="~/Register" class="btn btn-accent nav-cta">
+                        <span class="btn-bg"></span>
+                        <span class="btn-text">Register</span>
+                    </a>
+                    <div class="register-dropdown">
+                        <a href="~/Register/International" class="register-dropdown-item">🌍 International Participants</a>
+                        <a href="~/Register/Domestic" class="register-dropdown-item">🇹🇼 Domestic Participants (Taiwan)</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -59,7 +67,21 @@
     </section>
 
     <section id="register" class="registration-section container py-fluid pb-xxl">
-        <p class="text-center mb-xl animate-on-scroll">Secure your spot for ACSEL 2026.</p>
+        @if (isDomestic)
+        {
+            <div class="text-center mb-xl animate-on-scroll">
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">歡迎報名 ACSEL 2026</h2>
+                <p style="opacity: 0.75; max-width: 600px; margin: 0 auto;">本報名類別適用於台灣地區與會者，費用以新台幣（TWD）計算</p>
+            </div>
+        }
+        else
+        {
+            <div class="text-center mb-xl animate-on-scroll">
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">Welcome to ACSEL 2026</h2>
+                <p style="opacity: 0.75; max-width: 700px; margin: 0 auto 0.5rem;">This registration category is intended for participants outside Taiwan.<br>All registration fees are listed and payable in New Taiwan Dollars (TWD).</p>
+                <p style="opacity: 0.6; font-size: 0.9rem; max-width: 600px; margin: 0 auto;">Please note that exchange rates may vary depending on your payment provider.</p>
+            </div>
+        }
 
         @if (!string.IsNullOrEmpty(Model.SuccessMessage))
         {
@@ -78,51 +100,76 @@
         }
 
         <div class="pricing-grid animate-on-scroll">
-            <div class="pricing-card">
-                <h3>Early Bird</h3>
-                <p class="ends data-text">Ends 15 August 2026</p>
-                <div class="price">4,000 <span class="currency">TWD</span></div>
-                <p class="tier">Standard</p>
-            </div>
-            <div class="pricing-card featured">
-                <h3>Standard</h3>
-                <p class="ends data-text">After 15 August 2026</p>
-                <div class="price">4,500 <span class="currency">TWD</span></div>
-                <p class="tier">Standard</p>
-            </div>
-            <div class="pricing-card">
-                <h3>Student</h3>
-                <p class="ends data-text">Valid Student ID Required</p>
-                <div class="price">1,500 <span class="currency">TWD</span></div>
-                <p class="tier">Student (Early / Standard)</p>
-            </div>
+            @if (isDomestic)
+            {
+                <div class="pricing-card">
+                    <h3>早鳥優惠</h3>
+                    <p class="ends data-text">2026年8月15日前</p>
+                    <div class="price">4,000 <span class="currency">TWD</span></div>
+                    <p class="tier">一般</p>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>標準</h3>
+                    <p class="ends data-text">2026年8月15日後</p>
+                    <div class="price">4,500 <span class="currency">TWD</span></div>
+                    <p class="tier">一般</p>
+                </div>
+                <div class="pricing-card">
+                    <h3>學生</h3>
+                    <p class="ends data-text">需出示有效學生證</p>
+                    <div class="price">1,500 <span class="currency">TWD</span></div>
+                    <p class="tier">學生（早鳥／標準）</p>
+                </div>
+            }
+            else
+            {
+                <div class="pricing-card">
+                    <h3>Early Bird</h3>
+                    <p class="ends data-text">Ends 15 August 2026</p>
+                    <div class="price">6,000 <span class="currency">TWD</span></div>
+                    <p class="tier">Standard</p>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Standard</h3>
+                    <p class="ends data-text">After 15 August 2026</p>
+                    <div class="price">7,500 <span class="currency">TWD</span></div>
+                    <p class="tier">Standard</p>
+                </div>
+                <div class="pricing-card">
+                    <h3>Student</h3>
+                    <p class="ends data-text">Valid Student ID Required</p>
+                    <div class="price">3,000 <span class="currency">TWD</span></div>
+                    <p class="tier">Student (Early / Standard)</p>
+                </div>
+            }
         </div>
     </section>
 
     <!-- Registration Form Section -->
     <section class="container pb-xxl" style="padding-top: 0; max-width: 720px;">
         <div class="animate-on-scroll">
-            <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem;">Registration Form</h2>
-            <p style="opacity: 0.65; margin-bottom: 2.5rem;">Please fill in all required fields to complete your registration.</p>
+            <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem;">@(isDomestic ? "報名表單" : "Registration Form")</h2>
+            <p style="opacity: 0.65; margin-bottom: 2.5rem;">@(isDomestic ? "請填寫以下所有必填欄位以完成報名。" : "Please fill in all required fields to complete your registration.")</p>
 
             <form id="registrationForm" method="post" novalidate
                 style="display: flex; flex-direction: column; gap: 1.5rem;">
                 @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Registration.ParticipantType" value="@pType" />
 
                 <!-- Section 1: Personal Information -->
                 <fieldset style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem; margin: 0;">
-                    <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">Personal Information</legend>
+                    <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">@(isDomestic ? "個人資料" : "Personal Information")</legend>
 
                     <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
-                        <label asp-for="Registration.FullName" style="font-size: 0.875rem; font-weight: 600;">Full Name (First / Last) <span style="color:#e53e3e;">*</span></label>
+                        <label asp-for="Registration.FullName" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "姓名" : "Full Name (First / Last)") <span style="color:#e53e3e;">*</span></label>
                         <input type="text" asp-for="Registration.FullName" required autocomplete="name"
-                            placeholder="Full Name"
+                            placeholder="@(isDomestic ? "姓名" : "Full Name")"
                             style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
                         <span asp-validation-for="Registration.FullName" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
-                        <label asp-for="Registration.Email" style="font-size: 0.875rem; font-weight: 600;">Email Address <span style="color:#e53e3e;">*</span></label>
+                        <label asp-for="Registration.Email" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "電子郵件" : "Email Address") <span style="color:#e53e3e;">*</span></label>
                         <input type="email" asp-for="Registration.Email" required autocomplete="email"
                             placeholder="your@email.com"
                             style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
@@ -130,25 +177,25 @@
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
-                        <label asp-for="Registration.Institution" style="font-size: 0.875rem; font-weight: 600;">Affiliation / Organization <span style="color:#e53e3e;">*</span></label>
+                        <label asp-for="Registration.Institution" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "服務單位／機構" : "Affiliation / Organization") <span style="color:#e53e3e;">*</span></label>
                         <input type="text" asp-for="Registration.Institution" required autocomplete="organization"
-                            placeholder="Institution or organization name"
+                            placeholder="@(isDomestic ? "服務單位或機構名稱" : "Institution or organization name")"
                             style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
                         <span asp-validation-for="Registration.Institution" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
-                        <label asp-for="Registration.TitlePosition" style="font-size: 0.875rem; font-weight: 600;">Title / Position <span style="color:#e53e3e;">*</span></label>
+                        <label asp-for="Registration.TitlePosition" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "職稱" : "Title / Position") <span style="color:#e53e3e;">*</span></label>
                         <input type="text" asp-for="Registration.TitlePosition" required
-                            placeholder="e.g. Professor, Researcher, Student"
+                            placeholder="@(isDomestic ? "例如：教授、研究員、學生" : "e.g. Professor, Researcher, Student")"
                             style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
                         <span asp-validation-for="Registration.TitlePosition" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                        <label asp-for="Registration.Phone" style="font-size: 0.875rem; font-weight: 600;">Phone</label>
+                        <label asp-for="Registration.Phone" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "電話" : "Phone")</label>
                         <input type="tel" asp-for="Registration.Phone" autocomplete="tel"
-                            placeholder="Optional"
+                            placeholder="@(isDomestic ? "選填" : "Optional")"
                             style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box;">
                         <span asp-validation-for="Registration.Phone" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                     </div>
@@ -156,26 +203,26 @@
 
                 <!-- Section 2: Participation -->
                 <fieldset style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem; margin: 0;">
-                    <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">Participation</legend>
+                    <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">@(isDomestic ? "參與項目" : "Participation")</legend>
 
                     <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
-                        <label asp-for="Registration.SightseeingTour" style="font-size: 0.875rem; font-weight: 600;">Sightseeing Tour (Jiufen) <span style="color:#e53e3e;">*</span></label>
+                        <label asp-for="Registration.SightseeingTour" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "觀光行程（九份）" : "Sightseeing Tour (Jiufen)") <span style="color:#e53e3e;">*</span></label>
                         <select asp-for="Registration.SightseeingTour" required
                             style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box; appearance: none; cursor: pointer;">
-                            <option value="" disabled selected>Select YES or NO</option>
-                            <option value="YES">YES</option>
-                            <option value="NO">NO</option>
+                            <option value="" disabled selected>@(isDomestic ? "請選擇 是 或 否" : "Select YES or NO")</option>
+                            <option value="YES">@(isDomestic ? "是" : "YES")</option>
+                            <option value="NO">@(isDomestic ? "否" : "NO")</option>
                         </select>
                         <span asp-validation-for="Registration.SightseeingTour" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                        <label asp-for="Registration.TechnicalTour" style="font-size: 0.875rem; font-weight: 600;">Technical Tour (Technology Industry) <span style="color:#e53e3e;">*</span></label>
+                        <label asp-for="Registration.TechnicalTour" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "技術參訪（科技產業）" : "Technical Tour (Technology Industry)") <span style="color:#e53e3e;">*</span></label>
                         <select asp-for="Registration.TechnicalTour" required
                             style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box; appearance: none; cursor: pointer;">
-                            <option value="" disabled selected>Select YES or NO</option>
-                            <option value="YES">YES</option>
-                            <option value="NO">NO</option>
+                            <option value="" disabled selected>@(isDomestic ? "請選擇 是 或 否" : "Select YES or NO")</option>
+                            <option value="YES">@(isDomestic ? "是" : "YES")</option>
+                            <option value="NO">@(isDomestic ? "否" : "NO")</option>
                         </select>
                         <span asp-validation-for="Registration.TechnicalTour" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                     </div>
@@ -183,27 +230,46 @@
 
                 <!-- Section 3: Payment -->
                 <fieldset style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem; margin: 0;">
-                    <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">Payment</legend>
+                    <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">@(isDomestic ? "付款資訊" : "Payment")</legend>
 
                     <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
-                        <label asp-for="Registration.TicketType" style="font-size: 0.875rem; font-weight: 600;">Registration Fee Category <span style="color:#e53e3e;">*</span></label>
+                        <label asp-for="Registration.TicketType" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "報名費用類別" : "Registration Fee Category") <span style="color:#e53e3e;">*</span></label>
                         <select asp-for="Registration.TicketType" required
                             style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box; appearance: none; cursor: pointer;">
-                            <option value="" disabled selected>Select fee category</option>
-                            <option value="Early Bird">Early Bird (by 15 August 2026) — 4,000 TWD</option>
-                            <option value="Standard">Standard (after 15 August 2026) — 4,500 TWD</option>
-                            <option value="Student">Student — 1,500 TWD</option>
+                            @if (isDomestic)
+                            {
+                                <option value="" disabled selected>請選擇費用類別</option>
+                                <option value="Early Bird">早鳥優惠（2026年8月15日前）— 4,000 TWD</option>
+                                <option value="Standard">標準（2026年8月15日後）— 4,500 TWD</option>
+                                <option value="Student">學生 — 1,500 TWD</option>
+                            }
+                            else
+                            {
+                                <option value="" disabled selected>Select fee category</option>
+                                <option value="Early Bird">Early Bird (by 15 August 2026) — 6,000 TWD</option>
+                                <option value="Standard">Standard (after 15 August 2026) — 7,500 TWD</option>
+                                <option value="Student">Student — 3,000 TWD</option>
+                            }
                         </select>
                         <span asp-validation-for="Registration.TicketType" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                        <label asp-for="Registration.PaymentMethod" style="font-size: 0.875rem; font-weight: 600;">Payment Method <span style="color:#e53e3e;">*</span></label>
+                        <label asp-for="Registration.PaymentMethod" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "付款方式" : "Payment Method") <span style="color:#e53e3e;">*</span></label>
                         <select asp-for="Registration.PaymentMethod" required
                             style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box; appearance: none; cursor: pointer;">
-                            <option value="" disabled selected>Select payment method</option>
-                            <option value="Credit Card">Credit Card</option>
-                            <option value="Bank Transfer">Bank Transfer</option>
+                            @if (isDomestic)
+                            {
+                                <option value="" disabled selected>請選擇付款方式</option>
+                                <option value="Credit Card">信用卡</option>
+                                <option value="Bank Transfer">銀行轉帳</option>
+                            }
+                            else
+                            {
+                                <option value="" disabled selected>Select payment method</option>
+                                <option value="Credit Card">Credit Card</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                            }
                         </select>
                         <span asp-validation-for="Registration.PaymentMethod" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                     </div>
@@ -215,7 +281,14 @@
                         <input type="checkbox" id="agreement" name="agreement" required @(Request.HasFormContentType && Request.Form["agreement"] == "on" ? "checked" : "") value="on"
                             style="margin-top: 0.15rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; cursor: pointer; accent-color: var(--accent, #1a73e8);">
                         <label style="font-size: 0.9rem; line-height: 1.5; cursor: pointer;">
-                            I have read and agree to the <button type="button" onclick="openTermsModal()" style="background:none;border:none;padding:0;font:inherit;font-weight:700;color:var(--accent,#1a73e8);cursor:pointer;text-decoration:underline;">registration terms and conditions</button> of ACSEL 2026. <span style="color:#e53e3e;">*</span>
+                            @if (isDomestic)
+                            {
+                                @:我已閱讀並同意 ACSEL 2026 的 <button type="button" onclick="openTermsModal()" style="background:none;border:none;padding:0;font:inherit;font-weight:700;color:var(--accent,#1a73e8);cursor:pointer;text-decoration:underline;">報名條款及條件</button>。<span style="color:#e53e3e;">*</span>
+                            }
+                            else
+                            {
+                                @:I have read and agree to the <button type="button" onclick="openTermsModal()" style="background:none;border:none;padding:0;font:inherit;font-weight:700;color:var(--accent,#1a73e8);cursor:pointer;text-decoration:underline;">registration terms and conditions</button> of ACSEL 2026. <span style="color:#e53e3e;">*</span>
+                            }
                         </label>
                     </div>
                     @if(ModelState["agreement"]?.Errors.Count > 0)
@@ -226,17 +299,17 @@
 
                 <!-- Comments -->
                 <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                    <label asp-for="Registration.Comments" style="font-size: 0.875rem; font-weight: 600;">Comments <span style="opacity:0.5; font-weight:400;">(optional)</span></label>
+                    <label asp-for="Registration.Comments" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "備註" : "Comments") <span style="opacity:0.5; font-weight:400;">@(isDomestic ? "（選填）" : "(optional)")</span></label>
                     <textarea asp-for="Registration.Comments" rows="3"
-                        placeholder="Any additional information"
+                        placeholder="@(isDomestic ? "其他補充資訊" : "Any additional information")"
                         style="padding: 0.65rem 0.875rem; border: 1px solid rgba(0,0,0,0.18); border-radius: 0.5rem; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; background: transparent; width: 100%; box-sizing: border-box; resize: vertical;"></textarea>
                     <span asp-validation-for="Registration.Comments" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                 </div>
 
                 <!-- Human Verification -->
                 <div style="display: flex; flex-direction: column; gap: 0.4rem; padding: 1.25rem; border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; background: var(--surface-alt, #fafafa);">
-                    <label for="CaptchaInput" style="font-size: 0.875rem; font-weight: 600; color: #333;">Image Verification <span style="color:#e53e3e;">*</span></label>
-                    <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 0.5rem 0;">Please enter the 4-digit number shown in the image.</p>
+                    <label for="CaptchaInput" style="font-size: 0.875rem; font-weight: 600; color: #333;">@(isDomestic ? "圖片驗證" : "Image Verification") <span style="color:#e53e3e;">*</span></label>
+                    <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 0.5rem 0;">@(isDomestic ? "請輸入圖片中顯示的4位數字。" : "Please enter the 4-digit number shown in the image.")</p>
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <img src="@ViewData["CaptchaImage"]" alt="Captcha Image" style="border-radius: 0.25rem; border: 1px solid #ccc; height: 40px;" />
                         <input type="text" id="CaptchaInput" asp-for="CaptchaInput" required autocomplete="off" maxlength="4" placeholder="Code"
@@ -248,7 +321,7 @@
 
                 <button type="submit" class="btn btn-accent" style="align-self: flex-start; min-width: 200px;">
                     <span class="btn-bg"></span>
-                    <span class="btn-text">Submit Registration</span>
+                    <span class="btn-text">@(isDomestic ? "送出報名" : "Submit Registration")</span>
                 </button>
             </form>
         </div>

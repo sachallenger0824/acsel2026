@@ -28,6 +28,7 @@ namespace AcselApp.Pages
 
         public string? ErrorMessage { get; set; }
 
+        public string ParticipantType { get; set; } = "International";
         public RegisterModel(AcselDbContext db, ILogger<RegisterModel> logger, IHttpClientFactory httpClientFactory, IConfiguration config)
         {
             _db = db;
@@ -69,13 +70,20 @@ namespace AcselApp.Pages
             ViewData["CaptchaImage"] = $"data:image/svg+xml;base64,{base64Svg}";
         }
 
-        public void OnGet()
+        public void OnGet(string? type)
         {
+            ParticipantType = string.Equals(type, "Domestic", StringComparison.OrdinalIgnoreCase) ? "Domestic" : "International";
             GenerateCaptcha();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // Restore ParticipantType from the posted form value
+            ParticipantType = Registration.ParticipantType;
+            if (ParticipantType != "Domestic" && ParticipantType != "International")
+                ParticipantType = "International";
+            Registration.ParticipantType = ParticipantType;
+
             if (Request.Form["agreement"] != "on")
             {
                 ModelState.AddModelError("agreement", "You must agree to the terms and conditions.");
@@ -109,14 +117,15 @@ namespace AcselApp.Pages
             Registration.RegistrationDate = DateTime.Now;
             Registration.PaymentStatus = "Pending";
 
-            // Determine fee based on TicketType or other criteria
-            string feeAmount = "15000"; // Default
+            // Determine fee based on TicketType and ParticipantType
+            string feeAmount;
+            bool isDomestic = Registration.ParticipantType == "Domestic";
             if (Registration.TicketType.Contains("Student", StringComparison.OrdinalIgnoreCase))
-                feeAmount = "1500";
+                feeAmount = isDomestic ? "1500" : "3000";
             else if (Registration.TicketType.Contains("Early", StringComparison.OrdinalIgnoreCase))
-                feeAmount = "4000";
+                feeAmount = isDomestic ? "4000" : "6000";
             else
-                feeAmount = "4500";
+                feeAmount = isDomestic ? "4500" : "7500";
 
             var client = _httpClientFactory.CreateClient();
             var content = new FormUrlEncodedContent(new[]
@@ -188,6 +197,7 @@ namespace AcselApp.Pages
     <p style='margin-top:0;margin-bottom:1.5rem;font-size:1rem;'>A new registration has been received:</p>
     <table style='width:100%;border-collapse:collapse;font-size:0.93rem;'>
       <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;width:35%;border-bottom:1px solid #d0d4e8;'>Full Name</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.FullName)}</td></tr>
+      <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Participant Type</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.ParticipantType)}</td></tr>
       <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Email</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'><a href='mailto:{System.Net.WebUtility.HtmlEncode(Registration.Email)}'>{System.Net.WebUtility.HtmlEncode(Registration.Email)}</a></td></tr>
       <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Phone</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.Phone ?? "—")}</td></tr>
       <tr><td style='padding:8px 12px;background:#eef0f8;font-weight:600;border-bottom:1px solid #d0d4e8;'>Institution</td><td style='padding:8px 12px;border-bottom:1px solid #e8e8e8;'>{System.Net.WebUtility.HtmlEncode(Registration.Institution ?? "—")}</td></tr>

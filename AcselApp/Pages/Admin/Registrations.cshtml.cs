@@ -71,7 +71,7 @@ namespace AcselApp.Pages.Admin
                 .ToListAsync();
 
             var sb = new StringBuilder();
-            sb.AppendLine("Id,FullName,Email,Phone,Institution,TitlePosition,ParticipationType,PaperTitle,TicketType,PaymentMethod,RegistrationDate,PaymentStatus,Comments");
+            sb.AppendLine("Id,FullName,Email,Phone,Institution,TitlePosition,ParticipantType,TicketType,PaymentMethod,RegistrationDate,PaymentStatus,Comments");
 
             foreach (var r in registrations)
             {
@@ -82,6 +82,7 @@ namespace AcselApp.Pages.Admin
                     Escape(r.Phone),
                     Escape(r.Institution),
                     Escape(r.TitlePosition),
+                    Escape(r.ParticipantType),
                     Escape(r.TicketType),
                     Escape(r.PaymentMethod),
                     Escape(r.RegistrationDate.ToString("yyyy-MM-dd HH:mm:ss")),
@@ -131,7 +132,7 @@ namespace AcselApp.Pages.Admin
             var ws = workbook.Worksheets.Add("報名資料");
 
             // Header row
-            string[] headers = { "編號", "姓名", "Email", "電話", "機構", "職稱", "參與類型", "論文題目", "費用類型", "付款方式", "付款狀態", "報名日期", "備註" };
+            string[] headers = { "編號", "姓名", "Email", "電話", "機構", "職稱", "國內/國外", "費用類型", "付款方式", "付款狀態", "報名日期", "備註" };
             for (int i = 0; i < headers.Length; i++)
             {
                 var cell = ws.Cell(1, i + 1);
@@ -153,11 +154,12 @@ namespace AcselApp.Pages.Admin
                 ws.Cell(row, 4).Value = r.Phone ?? "";
                 ws.Cell(row, 5).Value = r.Institution ?? "";
                 ws.Cell(row, 6).Value = r.TitlePosition ?? "";
-                ws.Cell(row, 7).Value = r.TicketType;
-                ws.Cell(row, 8).Value = r.PaymentMethod ?? "";
-                ws.Cell(row, 9).Value = r.PaymentStatus;
-                ws.Cell(row, 10).Value = r.RegistrationDate.ToString("yyyy-MM-dd HH:mm");
-                ws.Cell(row, 11).Value = r.Comments ?? "";
+                ws.Cell(row, 7).Value = r.ParticipantType == "Domestic" ? "國內" : "國外";
+                ws.Cell(row, 8).Value = r.TicketType;
+                ws.Cell(row, 9).Value = r.PaymentMethod ?? "";
+                ws.Cell(row, 10).Value = r.PaymentStatus;
+                ws.Cell(row, 11).Value = r.RegistrationDate.ToString("yyyy-MM-dd HH:mm");
+                ws.Cell(row, 12).Value = r.Comments ?? "";
 
                 // Alternate row shading
                 if (i % 2 == 1)
@@ -166,7 +168,7 @@ namespace AcselApp.Pages.Admin
                 }
 
                 // Color payment status cell
-                var statusCell = ws.Cell(row, 11);
+                var statusCell = ws.Cell(row, 10);
                 if (r.PaymentStatus == "Paid")
                 {
                     statusCell.Style.Fill.BackgroundColor = ClosedXML.Excel.XLColor.FromHtml("#D1FAE5");

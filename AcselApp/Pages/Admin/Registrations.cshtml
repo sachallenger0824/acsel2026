@@ -340,6 +340,14 @@
                     <div class="stat-value text-warning">@Model.Registrations.Count(r => r.PaymentStatus != "Paid")</div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-label">國內</div>
+                    <div class="stat-value" style="color: #60a5fa;">@Model.Registrations.Count(r => r.ParticipantType == "Domestic")</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">國外</div>
+                    <div class="stat-value" style="color: #c084fc;">@Model.Registrations.Count(r => r.ParticipantType == "International")</div>
+                </div>
+                <div class="stat-card">
                     <div class="stat-label">學生</div>
                     <div class="stat-value" style="color: #a78bfa;">@Model.Registrations.Count(r => r.TicketType == "Student")</div>
                 </div>
@@ -356,6 +364,7 @@
                                 <th>姓名</th>
                                 <th>Email</th>
                                 <th>機構</th>
+                                <th>國內/國外</th>
                                 <th>費用類型</th>
                                 <th>付款狀態</th>
                                 <th>報名日期</th>
@@ -376,6 +385,20 @@
                                     </td>
                                     <td><span class="cell-secondary">@reg.Email</span></td>
                                     <td><span class="cell-secondary">@(reg.Institution ?? "—")</span></td>
+                                    <td>
+                                        @if (reg.ParticipantType == "Domestic")
+                                        {
+                                            <span class="status-badge" style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: #60a5fa;">
+                                                <span class="status-dot" style="background: #3b82f6;"></span>國內
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status-badge" style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.3); color: #c084fc;">
+                                                <span class="status-dot" style="background: #a855f7;"></span>國外
+                                            </span>
+                                        }
+                                    </td>
                                     <td><span class="cell-secondary">@reg.TicketType</span></td>
                                     <td>
                                         @if (reg.PaymentStatus == "Paid")
@@ -400,7 +423,7 @@
                                     <td><span class="cell-date">@reg.RegistrationDate.ToString("yyyy-MM-dd")</span></td>
                                     <td>
                                         <div class="action-btns">
-                                            <button class="btn btn-outline btn-sm" onclick='openDetail(@System.Text.Json.JsonSerializer.Serialize(new { reg.Id, reg.FullName, reg.Email, reg.Phone, reg.Institution, reg.TitlePosition, reg.SightseeingTour, reg.TechnicalTour, reg.TicketType, reg.PaymentMethod, Date = reg.RegistrationDate.ToString("yyyy-MM-dd HH:mm"), reg.PaymentStatus, reg.PaymentLink, reg.Comments }))'>
+                                            <button class="btn btn-outline btn-sm" onclick='openDetail(@System.Text.Json.JsonSerializer.Serialize(new { reg.Id, reg.FullName, reg.Email, reg.Phone, reg.Institution, reg.TitlePosition, reg.ParticipantType, reg.SightseeingTour, reg.TechnicalTour, reg.TicketType, reg.PaymentMethod, Date = reg.RegistrationDate.ToString("yyyy-MM-dd HH:mm"), reg.PaymentStatus, reg.PaymentLink, reg.Comments }))'>
                                                 <span class="material-symbols-outlined">visibility</span>
                                                 詳情
                                             </button>
@@ -474,6 +497,7 @@
                 { label: '電話', value: data.Phone || '—' },
                 { label: '機構', value: data.Institution || '—' },
                 { label: '職稱', value: data.TitlePosition || '—' },
+                { label: '國內/國外', value: data.ParticipantType === 'Domestic' ? '國內' : '國外' },
                 { label: '觀光行程', value: data.SightseeingTour || '—' },
                 { label: '技術參訪', value: data.TechnicalTour || '—' },
                 { label: '費用類型', value: data.TicketType },
