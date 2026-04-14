@@ -207,6 +207,10 @@
                 <fieldset style="border: 1px solid rgba(0,0,0,0.12); border-radius: 0.75rem; padding: 1.5rem; margin: 0;">
                     <legend style="font-weight: 700; padding: 0 0.5rem; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.6;">@(isDomestic ? "參與項目" : "Participation")</legend>
 
+                    <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem 0;">
+                        @(isDomestic ? "名額有限，請盡早報名，以免向隅。" : "Due to limited capacity, early registration is strongly recommended.")
+                    </p>
+
                     <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem;">
                         <label asp-for="Registration.SightseeingTour" style="font-size: 0.875rem; font-weight: 600;">@(isDomestic ? "觀光行程（九份）" : "Sightseeing Tour (Jiufen)") <span style="color:#e53e3e;">*</span></label>
                         <select asp-for="Registration.SightseeingTour" required
