@@ -19,65 +19,65 @@ build_property.TargetFrameworkIdentifier = .NETCoreApp
 build_property.TargetFrameworkVersion = v10.0
 build_property.RootNamespace = AcselApp
 build_property.RootNamespace = AcselApp
-build_property.ProjectDir = D:\acsel2026\AcselApp\
+build_property.ProjectDir = C:\Users\jay20\OneDrive\桌面\ac2\AcselApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\acsel2026\AcselApp
+build_property.MSBuildProjectDirectory = C:\Users\jay20\OneDrive\桌面\ac2\AcselApp
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/acsel2026/AcselApp/Pages/Admin/Abstracts.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Admin/Abstracts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWJzdHJhY3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Admin/Index.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Admin/Login.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Admin/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Admin/Registrations.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Admin/Registrations.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUmVnaXN0cmF0aW9ucy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Error.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Index.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Privacy.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Register.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Submit.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Submit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VibWl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/_ViewImports.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/_ViewStart.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/acsel2026/AcselApp/Pages/Shared/_Layout.cshtml]
+[C:/Users/jay20/OneDrive/桌面/ac2/AcselApp/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-aarg0xv803
