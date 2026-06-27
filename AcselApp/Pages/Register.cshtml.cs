@@ -76,6 +76,31 @@ namespace AcselApp.Pages
             GenerateCaptcha();
         }
 
+        private bool IsAjaxRequest()
+        {
+            var requestedWith = Request.Headers["X-Requested-With"].ToString();
+            var accept = Request.Headers.Accept.ToString();
+
+            return string.Equals(requestedWith, "XMLHttpRequest", StringComparison.OrdinalIgnoreCase)
+                || accept.Contains("application/json", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private IActionResult RegistrationErrorResponse(string message)
+        {
+            ErrorMessage = message;
+
+            if (IsAjaxRequest())
+            {
+                return new JsonResult(new { success = false, error = message })
+                {
+                    StatusCode = StatusCodes.Status400BadRequest
+                };
+            }
+
+            GenerateCaptcha();
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             // Restore ParticipantType from the posted form value
@@ -91,9 +116,7 @@ namespace AcselApp.Pages
 
             if (!ModelState.IsValid)
             {
-                ErrorMessage = "Some fields are missing or incorrect. Please review your entries and try again.";
-                GenerateCaptcha();
-                return Page();
+                return RegistrationErrorResponse("Some fields are missing or incorrect. Please review your entries and try again.");
             }
 
             string decodedExpected = string.Empty;
@@ -109,9 +132,7 @@ namespace AcselApp.Pages
             if (string.IsNullOrWhiteSpace(CaptchaInput) || CaptchaInput.Trim() != decodedExpected)
             {
                 ModelState.AddModelError("CaptchaInput", "Image verification failed. Please try again.");
-                ErrorMessage = "Image verification failed. Please try again.";
-                GenerateCaptcha();
-                return Page();
+                return RegistrationErrorResponse("Image verification failed. Please try again.");
             }
 
             Registration.RegistrationDate = DateTime.Now;
@@ -165,6 +186,11 @@ namespace AcselApp.Pages
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error creating payment order.");
+            }
+
+            if (string.IsNullOrWhiteSpace(Registration.PaymentLink) || !Registration.PaymentLink.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+            {
+                return RegistrationErrorResponse("Registration could not be completed because the payment page could not be created. Please try again later or contact the organizer.");
             }
 
             _db.Registrations.Add(Registration);
@@ -231,17 +257,15 @@ namespace AcselApp.Pages
 
             if (!string.IsNullOrEmpty(Registration.PaymentLink) && Registration.PaymentLink.StartsWith("http"))
             {
+                if (IsAjaxRequest())
+                {
+                    return new JsonResult(new { success = true, paymentLink = Registration.PaymentLink });
+                }
+
                 return Redirect(Registration.PaymentLink);
             }
 
-            SuccessMessage = "Registration submitted successfully! We will contact you shortly.";
-            
-            // Clear form
-            Registration = new Registration();
-            ModelState.Clear();
-            GenerateCaptcha();
-
-            return Page();
+            return RegistrationErrorResponse("Registration could not be completed because the payment page could not be created. Please try again later or contact the organizer.");
         }
     }
 }

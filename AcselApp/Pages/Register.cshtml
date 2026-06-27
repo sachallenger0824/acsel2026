@@ -101,6 +101,16 @@
             </div>
         }
 
+        <div id="registrationClientSuccess" class="animate-on-scroll" style="display:none; background: rgba(40, 167, 69, 0.15); border: 1px solid rgba(40, 167, 69, 0.4); padding: 1.5rem; border-radius: 1rem; text-align: center; margin-bottom: 2rem; color: #28a745;">
+            <span class="material-symbols-outlined" style="vertical-align: middle;">check_circle</span>
+            <strong></strong>
+        </div>
+
+        <div id="registrationClientError" class="animate-on-scroll" style="display:none; background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.4); padding: 1.5rem; border-radius: 1rem; text-align: center; margin-bottom: 2rem; color: #dc3545;">
+            <span class="material-symbols-outlined" style="vertical-align: middle;">error</span>
+            <strong></strong>
+        </div>
+
         <div class="pricing-grid animate-on-scroll">
             @if (isDomestic)
             {
@@ -325,7 +335,7 @@
                     <span asp-validation-for="CaptchaInput" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                 </div>
 
-                <button type="submit" class="btn btn-accent" style="align-self: flex-start; min-width: 200px;">
+                <button id="registrationSubmitButton" type="submit" class="btn btn-accent" style="align-self: flex-start; min-width: 200px;">
                     <span class="btn-bg"></span>
                     <span class="btn-text">@(isDomestic ? "送出報名" : "Submit Registration")</span>
                 </button>
@@ -414,6 +424,99 @@
                 closeTermsModal(false);
             }
         });
+
+        var registrationForm = document.getElementById('registrationForm');
+        var registrationSubmitButton = document.getElementById('registrationSubmitButton');
+        var registrationSubmitText = registrationSubmitButton ? registrationSubmitButton.querySelector('.btn-text') : null;
+        var originalSubmitText = registrationSubmitText ? registrationSubmitText.textContent : '';
+        var registrationClientSuccess = document.getElementById('registrationClientSuccess');
+        var registrationClientError = document.getElementById('registrationClientError');
+
+        function setRegistrationMessage(type, message) {
+            var visibleMessage = type === 'success' ? registrationClientSuccess : registrationClientError;
+            var hiddenMessage = type === 'success' ? registrationClientError : registrationClientSuccess;
+
+            if (hiddenMessage) hiddenMessage.style.display = 'none';
+            if (!visibleMessage) return;
+
+            var strong = visibleMessage.querySelector('strong');
+            if (strong) strong.textContent = message;
+            visibleMessage.style.display = 'block';
+            visibleMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function setRegistrationSubmitting(isSubmitting, text) {
+            if (registrationSubmitButton) registrationSubmitButton.disabled = isSubmitting;
+            if (registrationSubmitText) registrationSubmitText.textContent = text || originalSubmitText;
+        }
+
+        function writePaymentLoadingWindow(paymentWindow) {
+            try {
+                paymentWindow.document.open();
+                paymentWindow.document.write('<!doctype html><html><head><title>Opening payment page...</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="font-family:Arial,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;color:#1a1a2e;"><main style="text-align:center;padding:2rem;"><h1 style="font-size:1.2rem;margin:0 0 .75rem;">Opening payment page...</h1><p style="margin:0;color:#555;">Please keep this window open.</p></main></body></html>');
+                paymentWindow.document.close();
+            } catch (error) {
+                // Some browsers restrict writes to newly opened windows.
+            }
+        }
+
+        if (registrationForm) {
+            registrationForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                if (!registrationForm.checkValidity()) {
+                    registrationForm.reportValidity();
+                    return;
+                }
+
+                if (registrationClientError) registrationClientError.style.display = 'none';
+                if (registrationClientSuccess) registrationClientSuccess.style.display = 'none';
+
+                var paymentWindow = window.open('', '_blank');
+                if (!paymentWindow) {
+                    setRegistrationMessage('error', 'The payment window was blocked. Please allow pop-ups and submit again.');
+                    return;
+                }
+
+                writePaymentLoadingWindow(paymentWindow);
+                setRegistrationSubmitting(true, 'Creating payment page...');
+
+                try {
+                    var response = await fetch(registrationForm.action || window.location.href, {
+                        method: 'POST',
+                        body: new FormData(registrationForm),
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        credentials: 'same-origin'
+                    });
+
+                    var result = {};
+                    try {
+                        result = await response.json();
+                    } catch (error) {
+                        result = {};
+                    }
+
+                    if (!response.ok || !result.success || !result.paymentLink) {
+                        try { paymentWindow.close(); } catch (error) { }
+                        setRegistrationSubmitting(false);
+                        setRegistrationMessage('error', result.error || 'Registration could not be completed because the payment page could not be created. Please try again later or contact the organizer.');
+                        return;
+                    }
+
+                    try { paymentWindow.opener = null; } catch (error) { }
+                    paymentWindow.location.href = result.paymentLink;
+                    setRegistrationMessage('success', 'Registration submitted successfully. The payment page has opened in a new window.');
+                    setRegistrationSubmitting(true, 'Payment window opened');
+                } catch (error) {
+                    try { paymentWindow.close(); } catch (closeError) { }
+                    setRegistrationSubmitting(false);
+                    setRegistrationMessage('error', 'Registration could not be completed because the payment page could not be created. Please try again later or contact the organizer.');
+                }
+            });
+        }
     </script>
 
     <footer class="footer">
