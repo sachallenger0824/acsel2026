@@ -366,3 +366,7 @@ LeaveSystem/logs/*
 
 **/bin/
 **/obj/
+AcselApp/*.db
+AcselApp/*.db-wal
+AcselApp/*.db-shm
+AcselApp/*.db-journal
