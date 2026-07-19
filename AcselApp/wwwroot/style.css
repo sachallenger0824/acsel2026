@@ -1075,6 +1075,21 @@ a:hover {
   border-radius: 4px;
 }
 
+.sponsorship-footnotes {
+  width: 100%;
+  margin: 1rem 0 0;
+  padding-inline: 2rem;
+  box-sizing: border-box;
+  text-align: left;
+  color: rgba(31, 45, 38, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.sponsorship-footnotes p {
+  margin: 0.2rem 0;
+}
+
 /* Registration / Pricing */
 .registration-section {
   background-color: var(--c-light);
