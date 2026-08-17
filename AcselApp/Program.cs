@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using AcselApp.Data;
+using System.Text.RegularExpressions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -103,6 +104,67 @@ app.UseHttpsRedirection();
 var pathBase = app.Configuration["PathBase"];
 if (!string.IsNullOrEmpty(pathBase))
     app.UsePathBase(pathBase);
+
+// MapStaticAssets fingerprints static files for cache-busting. HTML documents need
+// stable URLs, so redirect any previously published fingerprinted HTML URL to its
+// canonical equivalent before serving static files.
+var canonicalHtmlPaths = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+{
+    ["index"] = "/",
+    ["about"] = "/about.html",
+    ["programme"] = "/programme.html",
+    ["speakers"] = "/speakers.html",
+    ["travel"] = "/travel.html",
+    ["sponsorship"] = "/sponsorship.html",
+    ["register"] = "/Register/International",
+    ["submit"] = "/Submit"
+};
+
+var legacyHtmlPaths = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+{
+    ["/index.html"] = "/",
+    ["/register.html"] = "/Register/International",
+    ["/submit.html"] = "/Submit"
+};
+
+var fingerprintedHtmlPath = new Regex(
+    @"^/(?<page>.+)\.[a-z0-9_-]{10}\.html$",
+    RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
+app.Use(async (context, next) =>
+{
+    if (HttpMethods.IsGet(context.Request.Method) || HttpMethods.IsHead(context.Request.Method))
+    {
+        var requestPath = context.Request.Path.Value ?? string.Empty;
+        string? canonicalPath = null;
+
+        if (legacyHtmlPaths.TryGetValue(requestPath, out var legacyCanonicalPath))
+        {
+            canonicalPath = legacyCanonicalPath;
+        }
+        else
+        {
+            var match = fingerprintedHtmlPath.Match(requestPath);
+            if (match.Success && canonicalHtmlPaths.TryGetValue(match.Groups["page"].Value, out var fingerprintCanonicalPath))
+                canonicalPath = fingerprintCanonicalPath;
+        }
+
+        if (canonicalPath is not null)
+        {
+            context.Response.Redirect($"{context.Request.PathBase}{canonicalPath}{context.Request.QueryString}", permanent: true);
+            return;
+        }
+    }
+
+    await next();
+});
+
+// HTML files are excluded from MapStaticAssets so new fingerprinted document URLs
+// are not generated. Serve only those excluded files here; CSS, JS, and images
+// continue through MapStaticAssets with its compression and cache optimizations.
+app.UseWhen(
+    context => context.Request.Path.Value?.EndsWith(".html", StringComparison.OrdinalIgnoreCase) == true,
+    htmlFiles => htmlFiles.UseStaticFiles());
 
 app.UseRouting();
 
