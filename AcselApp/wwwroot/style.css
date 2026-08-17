@@ -683,6 +683,10 @@ a:hover {
   gap: 4rem;
 }
 
+.about-text .about-paragraph-spaced {
+  margin-bottom: 1.6em;
+}
+
 @media (min-width: 1024px) {
   .about-grid {
     grid-template-columns: 3fr 1fr;
