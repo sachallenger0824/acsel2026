@@ -348,38 +348,58 @@
     <div id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsModalTitle"
         style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.55); overflow-y:auto; padding: 2rem 1rem;">
         <div style="background:#fff; max-width:640px; margin:auto; border-radius:1rem; padding:2rem 2rem 1.5rem; position:relative; box-shadow:0 24px 48px rgba(0,0,0,0.18);">
-            <button type="button" onclick="closeTermsModal(false)" aria-label="Close"
+            <button type="button" onclick="closeTermsModal(false)" aria-label="@(isDomestic ? "關閉" : "Close")"
                 style="position:absolute; top:1rem; right:1rem; background:none; border:none; cursor:pointer; font-size:1.4rem; line-height:1; opacity:0.5;">&#x2715;</button>
 
-            <h2 id="termsModalTitle" style="font-size:1.35rem; font-weight:700; margin:0 0 0.25rem;">Agreement &amp; Consent</h2>
-            <p style="font-size:0.875rem; opacity:0.6; margin:0 0 1.5rem;">Please read the following registration terms and conditions carefully.</p>
+            <h2 id="termsModalTitle" style="font-size:1.35rem; font-weight:700; margin:0 0 0.25rem;">@(isDomestic ? "註冊條款與同意書" : "Agreement & Consent")</h2>
+            <p style="font-size:0.875rem; opacity:0.6; margin:0 0 1.5rem;">@(isDomestic ? "請詳閱以下註冊條款與條件：" : "Please read the following registration terms and conditions carefully.")</p>
 
             <div style="font-size:0.9rem; line-height:1.7; max-height:55vh; overflow-y:auto; padding-right:0.5rem;">
-                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">1. Registration Confirmation</h3>
-                <p style="margin:0 0 1rem; opacity:0.8;">Registration is confirmed only after full payment of the applicable registration fee.</p>
+                @if (isDomestic)
+                {
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">1. 報名確認</h3>
+                    <p style="margin:0 0 1rem; opacity:0.8;">報名手續僅在全額繳清相應之註冊費用後始正式確認生效。</p>
 
-                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">2. Attendance &amp; Participation</h3>
-                <p style="margin:0 0 0.4rem; opacity:0.8;">Participants are responsible for their own travel, accommodation, and visa arrangements.</p>
-                <p style="margin:0 0 1rem; opacity:0.8;">The conference organizers reserve the right to make changes to the program, speakers, or schedule.</p>
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">2. 出席與與會規定</h3>
+                    <p style="margin:0 0 1rem; opacity:0.8;">與會者須自行負責交通、住宿及簽證等相關事宜。大會籌備委員會保留視實際需要調整大會議程、主講嘉賓或時間表之權利。</p>
 
-                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">3. Intellectual Property</h3>
-                <p style="margin:0 0 0.4rem; opacity:0.8;">Submitted papers, abstracts, and presentations must be original work.</p>
-                <p style="margin:0 0 1rem; opacity:0.8;">Authors retain copyright but grant ACSEL the right to publish abstracts or papers in conference proceedings.</p>
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">3. 智慧財產權</h3>
+                    <p style="margin:0 0 1rem; opacity:0.8;">所有投稿之摘要、論文及簡報內容均須為原創成果。作者保留其著作權，並同時授權 ACSEL 2026 大會於會議論文集及相關官方文宣中收錄與刊登該內容之非專屬權利。</p>
 
-                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">4. Privacy &amp; Data Protection</h3>
-                <p style="margin:0 0 0.4rem; opacity:0.8;">Personal information collected for registration will only be used for conference administration and communication.</p>
-                <p style="margin:0 0 1rem; opacity:0.8;">All information will be handled in accordance with applicable data protection regulations.</p>
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">4. 個人資料保護與隱私權</h3>
+                    <p style="margin:0 0 1rem; opacity:0.8;">報名過程中所蒐集之個人資料僅限用於大會行政作業、組織籌備及官方聯絡事項。所有個人資料均將嚴格遵守相關法規進行保護與管理。</p>
 
-                <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">5. Agreement</h3>
-                <p style="margin:0 0 1.5rem; opacity:0.8;">By registering, participants agree to comply with the above terms and conditions.</p>
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">5. 同意條款</h3>
+                    <p style="margin:0 0 1.5rem; opacity:0.8;">與會者完成報名即視為已閱讀、充分理解並同意遵守上述所有條款與條件。</p>
+                }
+                else
+                {
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">1. Registration Confirmation</h3>
+                    <p style="margin:0 0 1rem; opacity:0.8;">Registration is confirmed only after full payment of the applicable registration fee.</p>
+
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">2. Attendance &amp; Participation</h3>
+                    <p style="margin:0 0 0.4rem; opacity:0.8;">Participants are responsible for their own travel, accommodation, and visa arrangements.</p>
+                    <p style="margin:0 0 1rem; opacity:0.8;">The conference organizers reserve the right to make changes to the program, speakers, or schedule.</p>
+
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">3. Intellectual Property</h3>
+                    <p style="margin:0 0 0.4rem; opacity:0.8;">Submitted papers, abstracts, and presentations must be original work.</p>
+                    <p style="margin:0 0 1rem; opacity:0.8;">Authors retain copyright but grant ACSEL the right to publish abstracts or papers in conference proceedings.</p>
+
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">4. Privacy &amp; Data Protection</h3>
+                    <p style="margin:0 0 0.4rem; opacity:0.8;">Personal information collected for registration will only be used for conference administration and communication.</p>
+                    <p style="margin:0 0 1rem; opacity:0.8;">All information will be handled in accordance with applicable data protection regulations.</p>
+
+                    <h3 style="font-size:1rem; font-weight:700; margin:0 0 0.4rem;">5. Agreement</h3>
+                    <p style="margin:0 0 1.5rem; opacity:0.8;">By registering, participants agree to comply with the above terms and conditions.</p>
+                }
             </div>
 
             <div style="display:flex; gap:0.75rem; justify-content:flex-end; margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid rgba(0,0,0,0.1);">
                 <button type="button" onclick="closeTermsModal(false)"
-                    style="padding:0.6rem 1.25rem; border:1px solid rgba(0,0,0,0.18); border-radius:0.5rem; background:transparent; font:inherit; font-size:0.9rem; cursor:pointer;">Cancel</button>
+                    style="padding:0.6rem 1.25rem; border:1px solid rgba(0,0,0,0.18); border-radius:0.5rem; background:transparent; font:inherit; font-size:0.9rem; cursor:pointer;">@(isDomestic ? "取消" : "Cancel")</button>
                 <button type="button" onclick="closeTermsModal(true)" class="btn btn-accent" style="min-width:130px;">
                     <span class="btn-bg"></span>
-                    <span class="btn-text">I Agree</span>
+                    <span class="btn-text">@(isDomestic ? "同意" : "I Agree")</span>
                 </button>
             </div>
         </div>
