@@ -340,6 +340,23 @@
                     <span class="btn-bg"></span>
                     <span class="btn-text">@(isDomestic ? "送出報名" : "Submit Registration")</span>
                 </button>
+
+                @if (!isDomestic)
+                {
+                    <aside aria-labelledby="visaInvitationLetterTitle" style="padding:1.25rem; border:1px solid rgba(0,0,0,0.12); border-radius:0.75rem; background:var(--surface-alt, #fafafa); font-size:0.9rem; line-height:1.6;">
+                        <h3 id="visaInvitationLetterTitle" style="font-size:1rem; font-weight:700; margin:0 0 0.5rem;">Visa &amp; Official Invitation Letter</h3>
+                        <p style="margin:0 0 0.75rem;">International participants who require an official invitation letter for visa application or institutional travel authorization may request one upon completing conference registration.</p>
+                        <p style="margin:0 0 0.4rem;">Please contact the ACSEL 2026 Secretariat at <a href="mailto:acsel2026@office.pccu.edu.tw">acsel2026@office.pccu.edu.tw</a> and provide the following details:</p>
+                        <ul style="margin:0 0 0.75rem; padding-left:1.25rem;">
+                            <li>Full name</li>
+                            <li>Affiliation / Institution</li>
+                            <li>Passport name (if different from full name)</li>
+                            <li>Abstract ID and title (if applicable)</li>
+                            <li>Registration confirmation and payment details</li>
+                        </ul>
+                        <p style="margin:0;">Please note: An official invitation letter does not constitute financial support, nor does it guarantee visa issuance by immigration authorities.</p>
+                    </aside>
+                }
             </form>
         </div>
     </section>
