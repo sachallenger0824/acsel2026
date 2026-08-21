@@ -370,3 +370,4 @@ AcselApp/*.db
 AcselApp/*.db-wal
 AcselApp/*.db-shm
 AcselApp/*.db-journal
+**/App_Data/DataProtection-Keys/
