@@ -17,6 +17,56 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=IBM+Plex+Mono&family=Outfit:wght@400;600&family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="~/style.css">
+    <style>
+        .registration-submit-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .registration-payment-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            flex: 1;
+            max-width: 520px;
+            padding: 0.9rem 1rem;
+            border: 1px dashed rgba(214, 104, 43, 0.55);
+            border-radius: 0.75rem;
+            background: rgba(255, 249, 242, 0.8);
+            font-size: 0.875rem;
+            line-height: 1.55;
+        }
+
+        .registration-payment-note[hidden] {
+            display: none;
+        }
+
+        .registration-payment-note .material-symbols-outlined {
+            flex-shrink: 0;
+            color: var(--accent, #d6682b);
+            font-size: 1.25rem;
+            margin-top: 0.05rem;
+        }
+
+        .registration-payment-note p {
+            margin: 0;
+        }
+
+        @@media (max-width: 700px) {
+            .registration-submit-row {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .registration-submit-row .btn,
+            .registration-payment-note {
+                width: 100%;
+                max-width: none;
+                box-sizing: border-box;
+            }
+        }
+    </style>
 </head>
 <body>
     <svg class="noise-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -336,10 +386,28 @@
                     <span asp-validation-for="CaptchaInput" style="color:#e53e3e; font-size: 0.8rem; margin-top: 0.2rem;"></span>
                 </div>
 
-                <button id="registrationSubmitButton" type="submit" class="btn btn-accent" style="align-self: flex-start; min-width: 200px;">
-                    <span class="btn-bg"></span>
-                    <span class="btn-text">@(isDomestic ? "送出報名" : "Submit Registration")</span>
-                </button>
+                <div class="registration-submit-row">
+                    <button id="registrationSubmitButton" type="submit" class="btn btn-accent" style="min-width: 200px;">
+                        <span class="btn-bg"></span>
+                        <span class="btn-text">@(isDomestic ? "送出報名" : "Submit Registration")</span>
+                    </button>
+
+                    <aside id="registrationPaymentNote" class="registration-payment-note" hidden aria-label="@(isDomestic ? "繳費與收據說明" : "Payment and receipt information")">
+                        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                        <div>
+                            @if (isDomestic)
+                            {
+                                <p><strong>繳費成功即完成註冊。</strong></p>
+                                <p><strong>正式收據將於研討會現場提供。</strong></p>
+                            }
+                            else
+                            {
+                                <p>Registration is confirmed upon successful payment.</p>
+                                <p>Official receipts will be provided during the conference.</p>
+                            }
+                        </div>
+                    </aside>
+                </div>
 
                 @if (!isDomestic)
                 {
@@ -469,6 +537,7 @@
         var originalSubmitText = registrationSubmitText ? registrationSubmitText.textContent : '';
         var registrationClientSuccess = document.getElementById('registrationClientSuccess');
         var registrationClientError = document.getElementById('registrationClientError');
+        var registrationPaymentNote = document.getElementById('registrationPaymentNote');
 
         function setRegistrationMessage(type, message) {
             var visibleMessage = type === 'success' ? registrationClientSuccess : registrationClientError;
@@ -490,9 +559,29 @@
 
         function writePaymentLoadingWindow(paymentWindow) {
             try {
-                paymentWindow.document.open();
-                paymentWindow.document.write('<!doctype html><html><head><title>Opening payment page...</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="font-family:Arial,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;color:#1a1a2e;"><main style="text-align:center;padding:2rem;"><h1 style="font-size:1.2rem;margin:0 0 .75rem;">Opening payment page...</h1><p style="margin:0;color:#555;">Please keep this window open.</p></main></body></html>');
-                paymentWindow.document.close();
+                // Build DOM nodes so development script injection cannot split an HTML string.
+                var paymentDocument = paymentWindow.document;
+                paymentDocument.title = 'Opening payment page...';
+
+                var viewport = paymentDocument.createElement('meta');
+                viewport.name = 'viewport';
+                viewport.content = 'width=device-width, initial-scale=1';
+                paymentDocument.head.appendChild(viewport);
+
+                paymentDocument.body.style.cssText = 'font-family:Arial,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;color:#1a1a2e;';
+                var main = paymentDocument.createElement('main');
+                main.style.cssText = 'text-align:center;padding:2rem;';
+
+                var heading = paymentDocument.createElement('h1');
+                heading.style.cssText = 'font-size:1.2rem;margin:0 0 .75rem;';
+                heading.textContent = 'Opening payment page...';
+                main.appendChild(heading);
+
+                var message = paymentDocument.createElement('p');
+                message.style.cssText = 'margin:0;color:#555;';
+                message.textContent = 'Please keep this window open.';
+                main.appendChild(message);
+                paymentDocument.body.replaceChildren(main);
             } catch (error) {
                 // Some browsers restrict writes to newly opened windows.
             }
@@ -509,6 +598,7 @@
 
                 if (registrationClientError) registrationClientError.style.display = 'none';
                 if (registrationClientSuccess) registrationClientSuccess.style.display = 'none';
+                if (registrationPaymentNote) registrationPaymentNote.hidden = true;
 
                 var paymentWindow = window.open('', '_blank');
                 if (!paymentWindow) {
@@ -548,6 +638,7 @@
                     paymentWindow.location.href = result.paymentLink;
                     setRegistrationMessage('success', 'Registration submitted successfully. The payment page has opened in a new window.');
                     setRegistrationSubmitting(true, 'Payment window opened');
+                    if (registrationPaymentNote) registrationPaymentNote.hidden = false;
                 } catch (error) {
                     try { paymentWindow.close(); } catch (closeError) { }
                     setRegistrationSubmitting(false);
