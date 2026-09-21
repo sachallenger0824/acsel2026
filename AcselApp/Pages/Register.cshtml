@@ -4,6 +4,7 @@
     Layout = null;
     var pType = Model.ParticipantType; // "International" or "Domestic"
     var isDomestic = pType == "Domestic";
+    var earlyBirdDateEn = Model.EarlyBirdDeadline.ToString("d MMMM yyyy", System.Globalization.CultureInfo.InvariantCulture);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +41,25 @@
 
         .registration-payment-note[hidden] {
             display: none;
+        }
+
+        .pricing-card.expired {
+            opacity: 0.5;
+        }
+
+        .pricing-card.expired .price {
+            text-decoration: line-through;
+        }
+
+        .pricing-closed-badge {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.15rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.08);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
         }
 
         .registration-payment-note .material-symbols-outlined {
@@ -165,15 +185,19 @@
         <div class="pricing-grid animate-on-scroll">
             @if (isDomestic)
             {
-                <div class="pricing-card">
+                <div class="pricing-card@(Model.IsEarlyBirdOpen ? "" : " expired")">
                     <h3>早鳥優惠</h3>
-                    <p class="ends data-text">2026年9月20日前</p>
+                    <p class="ends data-text">@(Model.EarlyBirdDeadline.ToString("yyyy年M月d日"))前</p>
                     <div class="price">4,000 <span class="currency">TWD</span></div>
                     <p class="tier">一般</p>
+                    @if (!Model.IsEarlyBirdOpen)
+                    {
+                        <span class="pricing-closed-badge">已截止</span>
+                    }
                 </div>
                 <div class="pricing-card featured">
                     <h3>標準</h3>
-                    <p class="ends data-text">2026年9月20日後</p>
+                    <p class="ends data-text">@(Model.EarlyBirdDeadline.ToString("yyyy年M月d日"))後</p>
                     <div class="price">4,500 <span class="currency">TWD</span></div>
                     <p class="tier">一般</p>
                 </div>
@@ -186,15 +210,19 @@
             }
             else
             {
-                <div class="pricing-card">
+                <div class="pricing-card@(Model.IsEarlyBirdOpen ? "" : " expired")">
                     <h3>Early Bird</h3>
-                    <p class="ends data-text">Ends 20 September 2026</p>
+                    <p class="ends data-text">Ended @earlyBirdDateEn</p>
                     <div class="price">6,000 <span class="currency">TWD</span></div>
                     <p class="tier">Standard</p>
+                    @if (!Model.IsEarlyBirdOpen)
+                    {
+                        <span class="pricing-closed-badge">CLOSED</span>
+                    }
                 </div>
                 <div class="pricing-card featured">
                     <h3>Standard</h3>
-                    <p class="ends data-text">After 20 September 2026</p>
+                    <p class="ends data-text">After @earlyBirdDateEn</p>
                     <div class="price">7,500 <span class="currency">TWD</span></div>
                     <p class="tier">Standard</p>
                 </div>
@@ -306,15 +334,21 @@
                             @if (isDomestic)
                             {
                                 <option value="" disabled selected>請選擇費用類別</option>
-                                <option value="Early Bird">早鳥優惠（2026年9月20日前）— 4,000 TWD</option>
-                                <option value="Standard">標準（2026年9月20日後）— 4,500 TWD</option>
+                                @if (Model.IsEarlyBirdOpen)
+                                {
+                                    <option value="Early Bird">早鳥優惠（@(Model.EarlyBirdDeadline.ToString("yyyy年M月d日"))前）— 4,000 TWD</option>
+                                }
+                                <option value="Standard">標準（@(Model.EarlyBirdDeadline.ToString("yyyy年M月d日"))後）— 4,500 TWD</option>
                                 <option value="Student">學生 — 1,500 TWD</option>
                             }
                             else
                             {
                                 <option value="" disabled selected>Select fee category</option>
-                                <option value="Early Bird">Early Bird (by 20 September 2026) — 6,000 TWD</option>
-                                <option value="Standard">Standard (after 20 September 2026) — 7,500 TWD</option>
+                                @if (Model.IsEarlyBirdOpen)
+                                {
+                                    <option value="Early Bird">Early Bird (by @earlyBirdDateEn) — 6,000 TWD</option>
+                                }
+                                <option value="Standard">Standard (after @earlyBirdDateEn) — 7,500 TWD</option>
                                 <option value="Student">Student — 3,000 TWD</option>
                             }
                         </select>

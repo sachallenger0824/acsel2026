@@ -29,6 +29,13 @@ namespace AcselApp.Pages
         public string? ErrorMessage { get; set; }
 
         public string ParticipantType { get; set; } = "International";
+
+        // Early-bird pricing is accepted up to and including this date. Set
+        // "Registration:EarlyBirdDeadline" in appsettings.json to change it.
+        public DateTime EarlyBirdDeadline { get; private set; } = new DateTime(2026, 9, 20);
+
+        public bool IsEarlyBirdOpen { get; private set; } = true;
+
         public RegisterModel(AcselDbContext db, ILogger<RegisterModel> logger, IHttpClientFactory httpClientFactory, IConfiguration config)
         {
             _db = db;
@@ -70,9 +77,18 @@ namespace AcselApp.Pages
             ViewData["CaptchaImage"] = $"data:image/svg+xml;base64,{base64Svg}";
         }
 
+        private void ApplyEarlyBirdPolicy()
+        {
+            if (DateTime.TryParse(_config["Registration:EarlyBirdDeadline"], out var configured))
+                EarlyBirdDeadline = configured.Date;
+
+            IsEarlyBirdOpen = DateTime.Now.Date <= EarlyBirdDeadline;
+        }
+
         public void OnGet(string? type)
         {
             ParticipantType = string.Equals(type, "Domestic", StringComparison.OrdinalIgnoreCase) ? "Domestic" : "International";
+            ApplyEarlyBirdPolicy();
             GenerateCaptcha();
         }
 
@@ -109,6 +125,8 @@ namespace AcselApp.Pages
                 ParticipantType = "International";
             Registration.ParticipantType = ParticipantType;
 
+            ApplyEarlyBirdPolicy();
+
             if (Request.Form["agreement"] != "on")
             {
                 ModelState.AddModelError("agreement", "You must agree to the terms and conditions.");
@@ -117,6 +135,18 @@ namespace AcselApp.Pages
             if (!ModelState.IsValid)
             {
                 return RegistrationErrorResponse("Some fields are missing or incorrect. Please review your entries and try again.");
+            }
+
+            // The early-bird option is hidden in the form once the deadline passes, but the
+            // fee is derived from the posted TicketType, so reject it here as well.
+            if (!IsEarlyBirdOpen && Registration.TicketType.Contains("Early", StringComparison.OrdinalIgnoreCase))
+            {
+                var expiredMessage = ParticipantType == "Domestic"
+                    ? $"早鳥優惠已於 {EarlyBirdDeadline:yyyy年M月d日} 截止，請改選「標準」費用類別。"
+                    : $"Early-bird registration closed on {EarlyBirdDeadline.ToString("d MMMM yyyy", System.Globalization.CultureInfo.InvariantCulture)}. Please select the Standard fee category.";
+
+                ModelState.AddModelError("Registration.TicketType", expiredMessage);
+                return RegistrationErrorResponse(expiredMessage);
             }
 
             string decodedExpected = string.Empty;
@@ -143,7 +173,7 @@ namespace AcselApp.Pages
             bool isDomestic = Registration.ParticipantType == "Domestic";
             if (Registration.TicketType.Contains("Student", StringComparison.OrdinalIgnoreCase))
                 feeAmount = isDomestic ? "1500" : "3000";
-            else if (Registration.TicketType.Contains("Early", StringComparison.OrdinalIgnoreCase))
+            else if (IsEarlyBirdOpen && Registration.TicketType.Contains("Early", StringComparison.OrdinalIgnoreCase))
                 feeAmount = isDomestic ? "4000" : "6000";
             else
                 feeAmount = isDomestic ? "4500" : "7500";
