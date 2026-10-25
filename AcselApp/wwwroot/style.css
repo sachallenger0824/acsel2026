@@ -766,6 +766,193 @@ a:hover {
   margin-bottom: 2rem;
 }
 
+/* Conference programme */
+.programme-card {
+  color: var(--c-dark);
+}
+
+.programme-kicker {
+  color: var(--c-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.programme-title {
+  max-width: 900px;
+  margin-bottom: 1.5rem;
+}
+
+.programme-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 1rem 2rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2.5rem;
+  background: rgba(46, 64, 54, 0.06);
+  border-radius: 1.25rem;
+}
+
+.programme-meta dt {
+  color: var(--c-primary);
+  font-family: var(--font-data);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.programme-meta dd {
+  font-weight: 600;
+}
+
+.programme-day + .programme-day {
+  margin-top: 2.75rem;
+}
+
+.programme-day > h3,
+.programme-tracks > h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  margin-bottom: 1rem;
+}
+
+.programme-day > h3 time {
+  color: var(--c-primary);
+  font-family: var(--font-data);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.programme-table-wrap {
+  overflow-x: auto;
+}
+
+.programme-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.programme-table th,
+.programme-table td {
+  padding: 0.9rem 0.75rem;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+  vertical-align: top;
+}
+
+.programme-table th {
+  color: var(--c-primary);
+  font-family: var(--font-heading-alt);
+  font-size: 0.9rem;
+}
+
+.programme-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.programme-time {
+  width: 10rem;
+  white-space: nowrap;
+  color: var(--c-primary);
+  font-family: var(--font-data);
+  font-size: 0.85rem;
+}
+
+.programme-session-title {
+  font-weight: 700;
+}
+
+.programme-detail {
+  color: rgba(26, 26, 26, 0.65);
+  font-size: 0.9rem;
+}
+
+.programme-details {
+  margin: 0.5rem 0 0 1.15rem;
+  color: rgba(26, 26, 26, 0.78);
+  font-size: 0.92rem;
+}
+
+.programme-details li + li {
+  margin-top: 0.2rem;
+}
+
+.programme-tracks {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(26, 26, 26, 0.1);
+}
+
+.programme-tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: 0.85rem;
+}
+
+.programme-track {
+  padding: 1.25rem;
+  border: 1px solid rgba(46, 64, 54, 0.12);
+  border-radius: 1rem;
+  background: rgba(46, 64, 54, 0.04);
+}
+
+.programme-track-label {
+  display: block;
+  color: var(--c-accent);
+  font-family: var(--font-data);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+}
+
+.programme-track p {
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.programme-notes {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  border-left: 3px solid var(--c-accent);
+  border-radius: 0 1rem 1rem 0;
+  background: rgba(204, 88, 51, 0.07);
+  color: rgba(26, 26, 26, 0.75);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 640px) {
+  .programme-card {
+    padding: 1.5rem 1.1rem;
+  }
+
+  .programme-table th,
+  .programme-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .programme-time {
+    width: 7.5rem;
+    font-size: 0.75rem;
+  }
+
+  .programme-details {
+    margin-left: 1rem;
+    font-size: 0.88rem;
+  }
+}
+
 .live-feed-label {
   display: inline-flex;
   align-items: center;
