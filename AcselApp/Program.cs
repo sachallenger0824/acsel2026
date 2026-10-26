@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using AcselApp.Data;
+using AcselApp.Models;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 var builder = WebApplication.CreateBuilder(args);
+var programmeJsonOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -89,6 +92,27 @@ using (var scope = app.Services.CreateScope())
             Status TEXT NOT NULL DEFAULT 'Pending'
         )";
     createAbstracts.ExecuteNonQuery();
+
+    // Ensure the programme content table is present in databases created before this feature.
+    using var createProgramme = conn.CreateCommand();
+    createProgramme.CommandText = @"
+        CREATE TABLE IF NOT EXISTS ProgrammeContents (
+            Id INTEGER PRIMARY KEY,
+            ContentJson TEXT NOT NULL,
+            UpdatedAt TEXT NOT NULL
+        )";
+    createProgramme.ExecuteNonQuery();
+
+    if (!db.ProgrammeContents.Any(item => item.Id == 1))
+    {
+        db.ProgrammeContents.Add(new ProgrammeContentRecord
+        {
+            Id = 1,
+            ContentJson = JsonSerializer.Serialize(ProgrammeDefaults.CreateInitialContent(), programmeJsonOptions),
+            UpdatedAt = DateTime.UtcNow
+        });
+        db.SaveChanges();
+    }
 }
 
 // Configure the HTTP request pipeline.
@@ -174,5 +198,29 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+app.MapGet("/api/programme", async (HttpContext context, AcselDbContext db) =>
+{
+    context.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+
+    var record = await db.ProgrammeContents
+        .AsNoTracking()
+        .SingleOrDefaultAsync(item => item.Id == 1);
+
+    ProgrammeContent content;
+    try
+    {
+        content = record is null
+            ? ProgrammeDefaults.CreateInitialContent()
+            : JsonSerializer.Deserialize<ProgrammeContent>(record.ContentJson, programmeJsonOptions)
+                ?? ProgrammeDefaults.CreateInitialContent();
+    }
+    catch (JsonException)
+    {
+        content = ProgrammeDefaults.CreateInitialContent();
+    }
+
+    return Results.Json(content, programmeJsonOptions);
+});
 
 app.Run();

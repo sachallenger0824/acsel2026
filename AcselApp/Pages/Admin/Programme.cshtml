@@ -1,0 +1,226 @@
+@page
+@model AcselApp.Pages.Admin.ProgrammeModel
+@{
+    Layout = null;
+    ViewData["Title"] = "議程管理";
+}
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>議程管理 | ACSEL 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/admin-programme.css" asp-append-version="true">
+</head>
+<body>
+    <aside class="sidebar">
+        <a class="brand" href="~/Admin">
+            <span class="brand-icon material-symbols-outlined">science</span>
+            <span><strong>ACSEL 2026</strong><small>管理後台</small></span>
+        </a>
+        <nav class="sidebar-nav" aria-label="管理功能">
+            <a class="nav-item" href="~/Admin"><span class="material-symbols-outlined">campaign</span>最新消息管理</a>
+            <a class="nav-item active" href="~/Admin/Programme" aria-current="page"><span class="material-symbols-outlined">calendar_month</span>議程管理</a>
+            <a class="nav-item" href="~/Admin/Registrations"><span class="material-symbols-outlined">groups</span>報名管理</a>
+            <a class="nav-item" href="~/Admin/Abstracts"><span class="material-symbols-outlined">description</span>投稿管理</a>
+            <a class="nav-item" href="~/programme.html" target="_blank" rel="noopener"><span class="material-symbols-outlined">open_in_new</span>查看公開議程</a>
+        </nav>
+        <form method="post" asp-page-handler="Logout" class="logout-form">
+            <button type="submit" class="nav-item logout"><span class="material-symbols-outlined">logout</span>登出</button>
+        </form>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">CONTENT MANAGEMENT</p>
+                <h1>議程管理</h1>
+            </div>
+            <button class="button button-primary header-save" type="submit" form="programme-form">
+                <span class="material-symbols-outlined">save</span>儲存並發布
+            </button>
+        </header>
+
+        <div class="page-body">
+            @if (!string.IsNullOrWhiteSpace(Model.SuccessMessage))
+            {
+                <div class="alert alert-success" role="status"><span class="material-symbols-outlined">check_circle</span>@Model.SuccessMessage</div>
+            }
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-error" role="alert">
+                    <span class="material-symbols-outlined">error</span>
+                    <div asp-validation-summary="All"></div>
+                </div>
+            }
+
+            <form method="post" asp-page-handler="Save" id="programme-form">
+                <section class="panel">
+                    <div class="panel-heading">
+                        <div><span class="step">01</span><h2>頁面資訊</h2></div>
+                        <p>這些欄位會顯示在公開議程頁最上方。</p>
+                    </div>
+                    <div class="form-grid">
+                        <label class="field field-wide">
+                            <span>會議名稱</span>
+                            <input class="form-input" asp-for="Programme.ConferenceName" maxlength="200" required>
+                        </label>
+                        <label class="field">
+                            <span>主題</span>
+                            <input class="form-input" asp-for="Programme.Theme" maxlength="300" required>
+                        </label>
+                        <label class="field">
+                            <span>地點</span>
+                            <input class="form-input" asp-for="Programme.Venue" maxlength="500" required>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <div class="panel-heading">
+                        <div><span class="step">02</span><h2>每日議程</h2></div>
+                        <p>可新增或刪除日期與活動；活動詳細資訊每行一項。</p>
+                    </div>
+                    <div id="days-list" class="editor-list">
+                        @for (var dayIndex = 0; dayIndex < Model.Programme.Days.Count; dayIndex++)
+                        {
+                            var day = Model.Programme.Days[dayIndex];
+                            <section class="editor-card day-card" data-day>
+                                <div class="editor-card-heading">
+                                    <h3>議程日</h3>
+                                    <button class="button button-danger button-small" type="button" data-remove-day><span class="material-symbols-outlined">delete</span>移除此日</button>
+                                </div>
+                                <div class="form-grid">
+                                    <label class="field">
+                                        <span>日程標籤</span>
+                                        <input class="form-input" name="@($"Programme.Days[{dayIndex}].Label")" value="@day.Label" data-day-field="Label" maxlength="100" required>
+                                    </label>
+                                    <label class="field">
+                                        <span>日期</span>
+                                        <input class="form-input" name="@($"Programme.Days[{dayIndex}].Date")" value="@day.Date" data-day-field="Date" maxlength="100" required>
+                                    </label>
+                                </div>
+                                <div class="items-heading"><h4>活動時程</h4><button class="button button-secondary button-small" type="button" data-add-item><span class="material-symbols-outlined">add</span>新增活動</button></div>
+                                <div class="items-list">
+                                    @for (var itemIndex = 0; itemIndex < day.Items.Count; itemIndex++)
+                                    {
+                                        var item = day.Items[itemIndex];
+                                        <article class="item-card" data-item>
+                                            <div class="item-fields">
+                                                <label class="field">
+                                                    <span>時間</span>
+                                                    <input class="form-input" name="@($"Programme.Days[{dayIndex}].Items[{itemIndex}].Time")" value="@item.Time" data-item-field="Time" maxlength="40" required>
+                                                </label>
+                                                <label class="field">
+                                                    <span>活動名稱</span>
+                                                    <input class="form-input" name="@($"Programme.Days[{dayIndex}].Items[{itemIndex}].Program")" value="@item.Program" data-item-field="Program" maxlength="300" required>
+                                                </label>
+                                                <label class="field field-wide">
+                                                    <span>活動說明、講者、題目或主持人（每行一項）</span>
+                                                    <textarea class="form-input form-textarea" name="@($"Programme.Days[{dayIndex}].Items[{itemIndex}].DetailsText")" data-item-field="DetailsText" maxlength="5000" rows="3">@item.DetailsText</textarea>
+                                                </label>
+                                            </div>
+                                            <button class="icon-button" type="button" data-remove-item aria-label="移除活動"><span class="material-symbols-outlined">close</span></button>
+                                        </article>
+                                    }
+                                </div>
+                            </section>
+                        }
+                    </div>
+                    <button class="button button-secondary add-day" type="button" id="add-day"><span class="material-symbols-outlined">add</span>新增議程日</button>
+                </section>
+
+                <section class="panel">
+                    <div class="panel-heading">
+                        <div><span class="step">03</span><h2>口頭報告主題</h2></div>
+                        <p>管理公開議程頁下方顯示的 Track 名稱與主題。</p>
+                    </div>
+                    <div id="tracks-list" class="track-list">
+                        @for (var trackIndex = 0; trackIndex < Model.Programme.Tracks.Count; trackIndex++)
+                        {
+                            var track = Model.Programme.Tracks[trackIndex];
+                            <div class="track-row" data-track>
+                                <label class="field">
+                                    <span>Track 名稱</span>
+                                    <input class="form-input" name="@($"Programme.Tracks[{trackIndex}].Name")" value="@track.Name" data-track-field="Name" maxlength="100" required>
+                                </label>
+                                <label class="field">
+                                    <span>主題</span>
+                                    <input class="form-input" name="@($"Programme.Tracks[{trackIndex}].Theme")" value="@track.Theme" data-track-field="Theme" maxlength="300" required>
+                                </label>
+                                <button class="icon-button" type="button" data-remove-track aria-label="移除主題"><span class="material-symbols-outlined">close</span></button>
+                            </div>
+                        }
+                    </div>
+                    <button class="button button-secondary" type="button" id="add-track"><span class="material-symbols-outlined">add</span>新增 Track</button>
+                </section>
+
+                <section class="panel">
+                    <div class="panel-heading">
+                        <div><span class="step">04</span><h2>備註</h2></div>
+                        <p>每項備註會以獨立段落顯示。</p>
+                    </div>
+                    <div id="notes-list" class="notes-list">
+                        @for (var noteIndex = 0; noteIndex < Model.Programme.Notes.Count; noteIndex++)
+                        {
+                            <div class="note-row" data-note>
+                                <label class="field">
+                                    <span>備註內容</span>
+                                    <input class="form-input" name="@($"Programme.Notes[{noteIndex}]")" value="@Model.Programme.Notes[noteIndex]" maxlength="1000">
+                                </label>
+                                <button class="icon-button" type="button" data-remove-note aria-label="移除備註"><span class="material-symbols-outlined">close</span></button>
+                            </div>
+                        }
+                    </div>
+                    <button class="button button-secondary" type="button" id="add-note"><span class="material-symbols-outlined">add</span>新增備註</button>
+                </section>
+
+                <div class="form-footer">
+                    <a class="button button-secondary" href="~/programme.html" target="_blank" rel="noopener"><span class="material-symbols-outlined">open_in_new</span>預覽公開頁</a>
+                    <button class="button button-primary" type="submit"><span class="material-symbols-outlined">save</span>儲存並發布</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <template id="day-template">
+        <section class="editor-card day-card" data-day>
+            <div class="editor-card-heading"><h3>議程日</h3><button class="button button-danger button-small" type="button" data-remove-day><span class="material-symbols-outlined">delete</span>移除此日</button></div>
+            <div class="form-grid">
+                <label class="field"><span>日程標籤</span><input class="form-input" data-day-field="Label" maxlength="100" required></label>
+                <label class="field"><span>日期</span><input class="form-input" data-day-field="Date" maxlength="100" required></label>
+            </div>
+            <div class="items-heading"><h4>活動時程</h4><button class="button button-secondary button-small" type="button" data-add-item><span class="material-symbols-outlined">add</span>新增活動</button></div>
+            <div class="items-list"></div>
+        </section>
+    </template>
+    <template id="item-template">
+        <article class="item-card" data-item>
+            <div class="item-fields">
+                <label class="field"><span>時間</span><input class="form-input" data-item-field="Time" maxlength="40" required></label>
+                <label class="field"><span>活動名稱</span><input class="form-input" data-item-field="Program" maxlength="300" required></label>
+                <label class="field field-wide"><span>活動說明、講者、題目或主持人（每行一項）</span><textarea class="form-input form-textarea" data-item-field="DetailsText" maxlength="5000" rows="3"></textarea></label>
+            </div>
+            <button class="icon-button" type="button" data-remove-item aria-label="移除活動"><span class="material-symbols-outlined">close</span></button>
+        </article>
+    </template>
+    <template id="track-template">
+        <div class="track-row" data-track>
+            <label class="field"><span>Track 名稱</span><input class="form-input" data-track-field="Name" maxlength="100" required></label>
+            <label class="field"><span>主題</span><input class="form-input" data-track-field="Theme" maxlength="300" required></label>
+            <button class="icon-button" type="button" data-remove-track aria-label="移除主題"><span class="material-symbols-outlined">close</span></button>
+        </div>
+    </template>
+    <template id="note-template">
+        <div class="note-row" data-note>
+            <label class="field"><span>備註內容</span><input class="form-input" data-note-field maxlength="1000"></label>
+            <button class="icon-button" type="button" data-remove-note aria-label="移除備註"><span class="material-symbols-outlined">close</span></button>
+        </div>
+    </template>
+    <script src="~/js/admin-programme.js" asp-append-version="true"></script>
+</body>
+</html>

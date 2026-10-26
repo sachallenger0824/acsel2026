@@ -767,6 +767,13 @@ a:hover {
 }
 
 /* Conference programme */
+.programme-loading {
+  min-height: 12rem;
+  display: grid;
+  place-items: center;
+  color: rgba(26, 26, 26, 0.65);
+}
+
 .programme-card {
   color: var(--c-dark);
 }
