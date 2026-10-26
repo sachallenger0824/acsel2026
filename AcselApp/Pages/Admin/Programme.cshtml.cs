@@ -134,7 +134,7 @@ namespace AcselApp.Pages.Admin
                 {
                     Time = item.Time.Trim(),
                     Program = item.Program.Trim(),
-                    Details = item.DetailsText
+                    Details = (item.DetailsText ?? string.Empty)
                         .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                         .ToList()
                 }).ToList()
@@ -187,7 +187,7 @@ namespace AcselApp.Pages.Admin
         public string Program { get; set; } = string.Empty;
 
         [StringLength(5000)]
-        public string DetailsText { get; set; } = string.Empty;
+        public string? DetailsText { get; set; }
     }
 
     public sealed class ProgrammeTrackEditForm
